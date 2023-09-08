@@ -3,7 +3,7 @@ package universidadgrupo33.entidades;
 public class Materia 
 {
 
-    //atributos-------------------------------------------    yo soy victor, yo pablo
+    //atributos
     private int idMateria;
     private String nombre;
     private int año;
