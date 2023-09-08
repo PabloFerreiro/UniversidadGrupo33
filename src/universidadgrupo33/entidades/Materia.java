@@ -2,7 +2,7 @@ package universidadgrupo33.entidades;
 
 public class Materia 
 {
-    //atributos----------HOLA, muchachos  
+    //atributos----------HOLA, muchachos, como estan? 
     private int idMateria;
     private String nombre;
     private int año;
