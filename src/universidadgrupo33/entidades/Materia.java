@@ -2,7 +2,7 @@ package universidadgrupo33.entidades;
 
 public class Materia 
 {
-    //atributos    
+    //atributos-------------------------------------------    
     private int idMateria;
     private String nombre;
     private int año;
