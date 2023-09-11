@@ -8,10 +8,10 @@ import javax.swing.JOptionPane;
 
 public class Conexion {
     //atributos del tipo estatico y final (constantes)
-    private static  String URL="jdbc:mariadb://localhost/";
-    private static  String DB="universidadgrupo33";
-    private static  String USUARIO="root";
-    private static  String PASSWORD="";
+    private static final String URL="jdbc:mariadb://localhost/";
+    private static final String DB="universidadgrupo33";
+    private static final String USUARIO="root";
+    private static final String PASSWORD="";
     private static Connection connection;
     
     //constructor vacio
