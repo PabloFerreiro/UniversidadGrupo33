@@ -17,8 +17,28 @@ public class UniversidadGrupo33 {
         AlumnoData alu=new AlumnoData();
         //alu.guardarAlumno(juan);
         //alu.modificarAlumno(juan);
-        alu.eliminarAlumno(3);
+        //alu.eliminarAlumno(3);
         
+//        Alumno alumnoEncontrado=alu.buscarAlumno(2);
+//        System.out.println("dni " + alumnoEncontrado.getDni());
+//        System.out.println("apellido " + alumnoEncontrado.getApellido());
+//
+
+//        Alumno alumnoEncontrado=alu.buscarAlumnoPorDni(23345678);
+//        if (alumnoEncontrado!=null){
+//        System.out.println("idAlumno " + alumnoEncontrado.getIdAlumno());
+//        System.out.println("apellido " + alumnoEncontrado.getApellido());
+//        }
+        
+        for(Alumno alumno:alu.listarAlumnos()){
+            System.out.println(alumno.getDni());
+            System.out.println(alumno.getApellido());
+            System.out.println(alumno.getNombre());
+            System.out.println(alumno.getFechaNac());
+            System.out.println("");
+   
+            
+        }
         
          
     }
