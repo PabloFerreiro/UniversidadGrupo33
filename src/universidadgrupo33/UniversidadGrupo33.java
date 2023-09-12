@@ -107,11 +107,9 @@ public class UniversidadGrupo33 {
     
         Alumno alu= new Alumno (3);
         Materia mat= new Materia (3);
-        
-        
-        Inscripcion inscripcion1= new Inscripcion (alu.getIdAlumno(), mat.getIdMateria(), 9.0);
-        InscripcionData insc1=new InscripcionData();
-        insc1.guardarInscripcion(inscripcion1);
+//        Inscripcion inscripcion1= new Inscripcion (alu.getIdAlumno(), mat.getIdMateria(), 9.0);
+//        InscripcionData insc1=new InscripcionData();
+//        insc1.guardarInscripcion(inscripcion1);
 
 
 
