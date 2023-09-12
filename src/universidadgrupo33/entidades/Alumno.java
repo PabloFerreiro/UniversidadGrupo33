@@ -35,6 +35,11 @@ public class Alumno {
         this.fechaNac = fechaNac;
         this.activo = activo;
     }
+    
+    //constructor solo con idAlumno
+    public Alumno(int idAlumno) {
+         this.idAlumno = idAlumno;
+    }
 
     
     // getters y setters

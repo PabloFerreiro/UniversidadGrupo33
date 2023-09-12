@@ -5,8 +5,10 @@ import java.time.LocalDate;
 import java.time.Month;
 import universidadgrupo33.accesoADatos.AlumnoData;
 import universidadgrupo33.accesoADatos.Conexion;
+import universidadgrupo33.accesoADatos.InscripcionData;
 import universidadgrupo33.accesoADatos.MateriaData;
 import universidadgrupo33.entidades.Alumno;
+import universidadgrupo33.entidades.Inscripcion;
 import universidadgrupo33.entidades.Materia;
 
 public class UniversidadGrupo33 {
@@ -87,17 +89,29 @@ public class UniversidadGrupo33 {
 //        mat.eliminarMateria(2);
 
     //Método listar materia
-        MateriaData mat=new MateriaData();
-        for(Materia materia:mat.listarMaterias()){
-            System.out.println(materia.getNombre());
-            System.out.println(materia.getAño());
-            System.out.println("");  
-            }
+//        MateriaData mat=new MateriaData();
+//        for(Materia materia:mat.listarMaterias()){
+//            System.out.println(materia.getNombre());
+//            System.out.println(materia.getAño());
+//            System.out.println("");  
+//            }
 
 //#########################################################################
 // CONEXIONES A INSCRIPCIONDATA
 //#########################################################################  
        
+    //Metodo guardar inscripcion
+            
+
+        //CONSULTAR EL PROBLEMAAAAAAAAAAAAAAAA!!!!!!!!!!!!!!!!!
+    
+        Alumno alu= new Alumno (3);
+        Materia mat= new Materia (3);
+        
+        
+        Inscripcion inscripcion1= new Inscripcion (alu.getIdAlumno(), mat.getIdMateria(), 9.0);
+        InscripcionData insc1=new InscripcionData();
+        insc1.guardarInscripcion(inscripcion1);
 
 
 

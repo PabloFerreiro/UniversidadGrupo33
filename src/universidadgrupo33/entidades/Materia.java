@@ -28,6 +28,11 @@ public class Materia
         this.estado = estado;
     }
     
+        //constructor solo con el idMateria
+    public Materia(int idMateria) {
+        this.idMateria = idMateria;
+    }
+    
     // getters y setters
 
     public int getIdMateria() {
