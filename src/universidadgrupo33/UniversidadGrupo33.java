@@ -100,23 +100,65 @@ public class UniversidadGrupo33 {
 // CONEXIONES A INSCRIPCIONDATA
 //#########################################################################  
        
-    //Metodo guardar inscripcion
-            
-
-        //CONSULTAR EL PROBLEMAAAAAAAAAAAAAAAA!!!!!!!!!!!!!!!!!
-    
-        Alumno alu= new Alumno (3);
-        Materia mat= new Materia (3);
-//        Inscripcion inscripcion1= new Inscripcion (alu.getIdAlumno(), mat.getIdMateria(), 9.0);
-//        InscripcionData insc1=new InscripcionData();
+           
+    //Metodo guardar inscripcion    
+//        Alumno alu = new Alumno (1);        
+//        Materia mat = new Materia (1);            
+//        Inscripcion inscripcion1 = new Inscripcion (alu, mat, 8);        
+//        InscripcionData insc1 = new InscripcionData();
 //        insc1.guardarInscripcion(inscripcion1);
+       
 
+    //Metodo actualizar nota
+//          InscripcionData insc1 = new InscripcionData();
+//          insc1.actualizarNota(3, 3, 10);
 
+      
+    //Método borrar inscripcion materia alumno
+//            InscripcionData insc1 = new InscripcionData();
+//            insc1.borrarInscripcionMateriaAlumno(3, 3);
 
+    //Método obtener inscripciones
+//        InscripcionData insc=new InscripcionData();
+//        for(String inscripcion:insc.obtenerInscripciones())
+//        {
+//            System.out.println(inscripcion);            
+//        }
+      
+    //Método obtener inscripciones por alumno
+//        InscripcionData insc=new InscripcionData();
+//        Alumno alu= new Alumno (1);        
+//        for(String inscripcion:insc.obtenerInscripcionesPorAlumno(alu.getIdAlumno()))
+//        {
+//            System.out.println(inscripcion);            
+//        }
 
-
-
-
+    //Método obtener alumnos por materia
+//        InscripcionData insc=new InscripcionData();        
+//        Materia mat= new Materia (2);            
+//        for(String inscripcion:insc.obtenerAlumnosXMateria(mat.getIdMateria()))        
+//        {
+//            System.out.println(inscripcion);            
+//        }
+        
+    //Método obtener materias cursadas
+//        InscripcionData insc=new InscripcionData();
+//        Alumno alu= new Alumno (1);        
+//        for(Materia materias:insc.obtenerMateriasCursadas(alu.getIdAlumno()))
+//        {
+//            System.out.println(materias.getNombre());            
+//        }
+        
+    //Método obtener materias no cursadas
+//        InscripcionData insc=new InscripcionData();
+//        Alumno alu= new Alumno (1);        
+//        for(Materia materias:insc.obtenerMateriasNoCursadas(alu.getIdAlumno()))
+//        {
+//            System.out.println(materias.getNombre());            
+//        }
+    
+    
+        
     }
     
 }
