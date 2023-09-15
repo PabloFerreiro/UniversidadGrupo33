@@ -10,6 +10,7 @@ import universidadgrupo33.accesoADatos.MateriaData;
 import universidadgrupo33.entidades.Alumno;
 import universidadgrupo33.entidades.Inscripcion;
 import universidadgrupo33.entidades.Materia;
+import universidadgrupo33.vistas.MenuPrincipal;
 
 public class UniversidadGrupo33 {
 
@@ -18,6 +19,8 @@ public class UniversidadGrupo33 {
         
         //Llamamos a la conexion
         Conexion.getConexion();
+        // PERMITE LA EJECUCION DEL SISTEMAS DESDE EL JFRAME PRINCIPAL
+        MenuPrincipal.main(args);
         
         
 //#########################################################################

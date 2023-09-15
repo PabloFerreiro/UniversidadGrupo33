@@ -6,6 +6,9 @@
 package universidadgrupo33.vistas;
 
 import java.awt.Dimension;
+import java.awt.Image;
+import java.awt.Toolkit;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,10 +19,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     /**
      * Creates new form MenuPrincipal
-     */
+     * @return 
+     */    
     
     // PARA PODER CREAR UN OPCION DE ELEGIR SI DESEA SALIR O NO CUANDO PRESIONA -SALIR o X-
-    void Cerrar(int tipo)
+    public void Cerrar(int tipo)
     {
         String botones[] = {"Cerrar", "Cancelar"};
         int eleccion = JOptionPane.showOptionDialog(this, "¿Desea cerrar la Aplicación?", "Titulo",
@@ -44,6 +48,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         this.setTitle("UNIVERSIDAD ULP");
+        // las siguientes 3 lineas permiten visualiar el logo de la empresa del sistema
+        Image iconoPropio = Toolkit.getDefaultToolkit().getImage(getClass().getResource("Grupo332023.png"));
+        setIconImage(iconoPropio);
+        //setVisible(true);
+       
         
     }
 
@@ -68,6 +77,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jmSalir = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(getIconImage());
 
         javax.swing.GroupLayout jdpEscritorioLayout = new javax.swing.GroupLayout(jdpEscritorio);
         jdpEscritorio.setLayout(jdpEscritorioLayout);
