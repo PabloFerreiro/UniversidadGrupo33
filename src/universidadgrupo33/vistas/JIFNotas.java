@@ -4,18 +4,21 @@
  * and open the template in the editor.
  */
 package universidadgrupo33.vistas;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Pablo
  */
 public class JIFNotas extends javax.swing.JInternalFrame {
-
-    /**
-     * Creates new form JIFNotas
-     */
+    private DefaultTableModel modelo = new DefaultTableModel(){
+    public boolean isCellEditable (int f, int c){
+    return false;
+    }
+    };
     public JIFNotas() {
         initComponents();
+        armarCabecera();
         this.setTitle("UNIVERSIDAD ULP - Carga de Notas");
     }
 
@@ -43,6 +46,7 @@ public class JIFNotas extends javax.swing.JInternalFrame {
         jcbSeleccionAlumno.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jcbSeleccionAlumno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        jtResultadoSeleccionAlumno.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jtResultadoSeleccionAlumno.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -121,4 +125,13 @@ public class JIFNotas extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> jcbSeleccionAlumno;
     private javax.swing.JTable jtResultadoSeleccionAlumno;
     // End of variables declaration//GEN-END:variables
+private void armarCabecera(){
+    modelo.addColumn("Código de Materia");
+    modelo.addColumn("Nombre de materia");
+    modelo.addColumn("Nota");
+    jtResultadoSeleccionAlumno.setModel(modelo);
+
+    }
+
+
 }

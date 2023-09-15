@@ -4,18 +4,21 @@
  * and open the template in the editor.
  */
 package universidadgrupo33.vistas;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Pablo
  */
 public class JIFInscripciones extends javax.swing.JInternalFrame {
-
-    /**
-     * Creates new form JIFInscripciones
-     */
+    private DefaultTableModel modelo = new DefaultTableModel(){
+    public boolean isCellEditable (int f, int c){
+    return false;
+    }
+    };
     public JIFInscripciones() {
         initComponents();
+        armarCabecera();
         this.setTitle("UNIVERSIDAD ULP - Formulario de Inscripción");
     }
 
@@ -63,15 +66,16 @@ public class JIFInscripciones extends javax.swing.JInternalFrame {
 
         grupoBotones.add(jrbjrbMateriasNoInscriptas);
 
+        jtResultadoSeleccionAlumnos.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jtResultadoSeleccionAlumnos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Title 1", "Title 2", "Title 3"
             }
         ));
         jScrollPane1.setViewportView(jtResultadoSeleccionAlumnos);
@@ -190,4 +194,12 @@ public class JIFInscripciones extends javax.swing.JInternalFrame {
     private javax.swing.JRadioButton jrbjrbMateriasNoInscriptas;
     private javax.swing.JTable jtResultadoSeleccionAlumnos;
     // End of variables declaration//GEN-END:variables
+
+    private void armarCabecera(){
+    modelo.addColumn("IdInscripción");
+    modelo.addColumn("Nombre de materia");
+    modelo.addColumn("Año");
+    jtResultadoSeleccionAlumnos.setModel(modelo);
+
+    }
 }
