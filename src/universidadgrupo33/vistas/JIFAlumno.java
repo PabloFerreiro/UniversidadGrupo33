@@ -10,7 +10,6 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -161,6 +160,11 @@ public class JIFAlumno extends javax.swing.JInternalFrame {
 
         jbGuardar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jbGuardar.setText("Guardar");
+        jbGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbGuardarActionPerformed(evt);
+            }
+        });
 
         jbModificar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jbModificar.setText("Modificar");
@@ -195,14 +199,11 @@ public class JIFAlumno extends javax.swing.JInternalFrame {
                                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                                 .addComponent(jtfApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(46, 46, 46))
+                                            .addComponent(jtfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jtfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addGroup(layout.createSequentialGroup()
-                                                        .addComponent(jrbEstado)
-                                                        .addGap(18, 18, 18)
-                                                        .addComponent(jLEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))))
+                                                .addComponent(jrbEstado)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jLEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -351,7 +352,30 @@ public class JIFAlumno extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbBuscarActionPerformed
 
     private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
-        // TODO add your handling code here:
+     AlumnoData alu=new AlumnoData();
+     Alumno alu1 = new Alumno();
+     
+     System.out.println(idAlumnoSql);
+     alu.eliminarAlumno(idAlumnoSql);
+     alu1.setActivo(false);
+     
+     
+     jrbEstado.setSelected(alu1.isActivo());
+                
+                //if (jrbEstado.getHideActionText()==false)
+                if (jrbEstado.isSelected())
+                {                    
+                    jLEstado.setForeground(Color.blue);
+                    //jLEstado.setBackground(Color.white);
+                    jLEstado.setText("Activo");
+                }else {                    
+                    jLEstado.setForeground (Color.red);
+                    //jLEstado.setBackground(Color.white);
+                    jLEstado.setText("Baja");
+                }
+     
+     
+     
     }//GEN-LAST:event_jbEliminarActionPerformed
 
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
@@ -366,6 +390,27 @@ public class JIFAlumno extends javax.swing.JInternalFrame {
     private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
         editarObloquearIngresos(false,true,true,true,true);
     }//GEN-LAST:event_jbModificarActionPerformed
+
+    private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
+   AlumnoData alu=new AlumnoData();
+   Alumno alumno = new Alumno();
+    alumno.setIdAlumno(0);
+    alumno.setDni(Integer.parseInt(jtfDni.getText()));
+    alumno.setApellido(jtfApellido.getText());
+    alumno.setNombre(jtfNombre.getText());
+    alumno.setFechaNac(Date.of(jDateChooser1));
+    
+    Integer.parseInt(jtfCodigo.getText())
+    alumno.ge
+    jtfApellido.setText(alumnoEncontrado.getApellido());
+    jtfNombre.setText(alumnoEncontrado.getNombre());                
+    // de esta manera se puede asignar el radio button prendido(true) o apagado(false)
+    //jrbEstado.setSelected(true);
+    jrbEstado.setSelected(alumnoEncontrado.isActivo());
+   Alumno alumnoEncontrado=alu.buscarAlumnoPorDni(Integer.parseInt(jtfDni.getText()));
+        
+        
+    }//GEN-LAST:event_jbGuardarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

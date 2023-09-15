@@ -91,11 +91,15 @@ public class AlumnoData {
     public void eliminarAlumno(int id) {
 
         String sql = "UPDATE alumno SET estado = 0 WHERE idAlumno=?";
+        
+        System.out.println("id=" + id);
+        
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             int exito = ps.executeUpdate();
+            System.out.println("variable exito=" + exito);
             if (exito == 1) {
                 JOptionPane.showMessageDialog(null, "Alumno eliminado");
             } else {
