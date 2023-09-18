@@ -59,7 +59,12 @@ public class JIFAlumno extends javax.swing.JInternalFrame {
         if (opcTrabajo==0) {
             if (eleccion == JOptionPane.YES_OPTION) {
                 // habilitar los campos para ingresar los datos del alumno nuevo           
-                editarObloquearIngresos(true, true, true, true, true);
+                editarObloquearIngresos(false, true, true, true, true);
+                jbGuardar.setEnabled(true);
+                jrbEstado.setSelected(true);
+                jLEstado.setForeground(Color.blue);
+                jLEstado.setText("Activo");
+                modifica="N";
             } else {
                 //    if (eleccion == JOptionPane.NO_OPTION) {
                 //       JOptionPane.showMessageDialog(this, "xxxxxxxxxxxxx");
@@ -71,7 +76,12 @@ public class JIFAlumno extends javax.swing.JInternalFrame {
             return true;
         }else {        
             if (eleccion == JOptionPane.YES_OPTION) {
-                return true;                
+                jbGuardar.setEnabled(false);
+                jbEliminar.setEnabled(false);
+                jbModificar.setEnabled(false);
+                jbRecuperar.setEnabled(false);
+                return true; 
+                
             } else {
                 return false;
             }
@@ -83,6 +93,10 @@ public class JIFAlumno extends javax.swing.JInternalFrame {
         this.setTitle("UNIVERSIDAD ULP - Gestión de Alumno");
         limpiarDatos(0);
         editarObloquearIngresos(true,false,false,false,false);
+        jbGuardar.setEnabled(false);
+        jbModificar.setEnabled(false);
+        jbEliminar.setEnabled(false);
+        jbRecuperar.setEnabled(false);
         modifica="";    
         recuperar="";    
         
@@ -113,7 +127,7 @@ public class JIFAlumno extends javax.swing.JInternalFrame {
         jbGuardar = new javax.swing.JButton();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jbModificar = new javax.swing.JButton();
-        jBRecuperar = new javax.swing.JButton();
+        jbRecuperar = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel1.setText("Gestión de Alumno");
@@ -188,7 +202,6 @@ public class JIFAlumno extends javax.swing.JInternalFrame {
             }
         });
 
-        jDateChooser1.setDateFormatString("dd/MM/yyyy");
         jDateChooser1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
         jbModificar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -199,11 +212,11 @@ public class JIFAlumno extends javax.swing.JInternalFrame {
             }
         });
 
-        jBRecuperar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jBRecuperar.setText("Recuperar");
-        jBRecuperar.addActionListener(new java.awt.event.ActionListener() {
+        jbRecuperar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jbRecuperar.setText("Recuperar");
+        jbRecuperar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBRecuperarActionPerformed(evt);
+                jbRecuperarActionPerformed(evt);
             }
         });
 
@@ -255,7 +268,7 @@ public class JIFAlumno extends javax.swing.JInternalFrame {
                                         .addComponent(jbGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(60, 60, 60)
                                         .addComponent(jbModificar))
-                                    .addComponent(jBRecuperar))
+                                    .addComponent(jbRecuperar))
                                 .addGap(18, 18, 18)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -302,13 +315,12 @@ public class JIFAlumno extends javax.swing.JInternalFrame {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jbSalir)
                                 .addComponent(jbEliminar)
-                                .addComponent(jBRecuperar)))
+                                .addComponent(jbRecuperar)))
                         .addComponent(jbNuevo, javax.swing.GroupLayout.Alignment.LEADING))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jbGuardar)
-                        .addGap(51, 51, 51))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jbModificar)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jbGuardar)
+                            .addComponent(jbModificar))
                         .addGap(51, 51, 51)))
                 .addGap(55, 55, 55))
         );
@@ -336,15 +348,15 @@ public class JIFAlumno extends javax.swing.JInternalFrame {
         try 
         {            
             AlumnoData alu=new AlumnoData();
-            // verifica si la variable -recuperar="R"- para buscar el DNI que tenga estado=0
-            if (recuperar=="R")
-            {
-                // bucara al DNI que figure con estado=0 en sql (Baja Logica)
-                tipoEstado=0;
-            }else {
-                // bucara al DNI que figure con estado=1 en sql (Activo)
-                tipoEstado=1;
-            }
+//            // verifica si la variable -recuperar="R"- para buscar el DNI que tenga estado=0
+//            if (recuperar=="R")
+//            {
+//                // bucara al DNI que figure con estado=0 en sql (Baja Logica)
+//                tipoEstado=0;
+//            }else {
+//                // bucara al DNI que figure con estado=1 en sql (Activo)
+//                tipoEstado=1;
+//            }
             Alumno alumnoEncontrado=alu.buscarAlumnoPorDni(Integer.parseInt(jtfDni.getText()),tipoEstado);
             if (alumnoEncontrado!=null){
                 // si encontro al alumno actualziar los datos de los textfield            
@@ -366,10 +378,18 @@ public class JIFAlumno extends javax.swing.JInternalFrame {
                     jLEstado.setForeground(Color.blue);
                     //jLEstado.setBackground(Color.white);
                     jLEstado.setText("Activo");
+                    jbGuardar.setEnabled(false);
+                    jbModificar.setEnabled(true);
+                    jbEliminar.setEnabled(true);
+                    jbRecuperar.setEnabled(false);
                 }else {                    
                     jLEstado.setForeground (Color.red);
                     //jLEstado.setBackground(Color.white);
                     jLEstado.setText("Baja");
+                    jbGuardar.setEnabled(false);
+                    jbModificar.setEnabled(false);
+                    jbEliminar.setEnabled(false);
+                    jbRecuperar.setEnabled(true);
                 }                                
                 // para establecer la fecha localdate de la clase alumno y pasarla a un textfield               
                 // este metodo de trasformacion no funciona para el tipo de muestreo de la fecha en jtextfiend
@@ -430,14 +450,21 @@ public class JIFAlumno extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbSalirActionPerformed
 
     private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
-        limpiarDatos(0);
+        limpiarDatos(0); 
+        jbGuardar.setEnabled(false);
+        jbModificar.setEnabled(false);
+        jbEliminar.setEnabled(false);
+        jbRecuperar.setEnabled(false);
         editarObloquearIngresos(true,false,false,false,false);
         // informa en esa variable -modifica- con una letra "N" de que se debe realizar un INSERT (ALTA/SQL)
         modifica="N";
     }//GEN-LAST:event_jbNuevoActionPerformed
 
     private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
-        editarObloquearIngresos(false,true,true,true,true);     
+        editarObloquearIngresos(false,true,true,true,true); 
+        jbGuardar.setEnabled(true);
+        jbEliminar.setEnabled(false);
+        jbModificar.setEnabled(false);
         // informa en esa variable -modifica- con una letra "M" de que se debe realizar un UPDATE (MODIFICACION/SQL)
         modifica="M";        
     }//GEN-LAST:event_jbModificarActionPerformed
@@ -489,12 +516,12 @@ public class JIFAlumno extends javax.swing.JInternalFrame {
         //modifica="";
     }//GEN-LAST:event_jbGuardarActionPerformed
 
-    private void jBRecuperarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBRecuperarActionPerformed
-        if (recuperar == "") {
-            // habilita la variable -recuperar="R"- para que cuando busque un DNI sea a los que figuren de Baja
-            // o sea con estado=0
-            recuperar = "R";
-        } else {
+    private void jbRecuperarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRecuperarActionPerformed
+//        if (recuperar == "") {
+//            // habilita la variable -recuperar="R"- para que cuando busque un DNI sea a los que figuren de Baja
+//            // o sea con estado=0
+//            recuperar = "R";
+//        } else {
             // envia un 4 cuando es para Recuperar un alumno Eliminado Logicamente
             if (verSiRegistraAlumnoNuevo(4, "Recuperar al ALumno ELiminado", "Cancelar", "ATENCION!!! (Opc.RECUPERAR)")) {
                 AlumnoData alu = new AlumnoData();
@@ -515,12 +542,11 @@ public class JIFAlumno extends javax.swing.JInternalFrame {
                 }
                 recuperar = "";
             }
-        }
-    }//GEN-LAST:event_jBRecuperarActionPerformed
+        //}
+    }//GEN-LAST:event_jbRecuperarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jBRecuperar;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLEstado;
     private javax.swing.JLabel jLabel1;
@@ -534,6 +560,7 @@ public class JIFAlumno extends javax.swing.JInternalFrame {
     private javax.swing.JButton jbGuardar;
     private javax.swing.JButton jbModificar;
     private javax.swing.JButton jbNuevo;
+    private javax.swing.JButton jbRecuperar;
     private javax.swing.JButton jbSalir;
     private javax.swing.JRadioButton jrbEstado;
     private javax.swing.JTextField jtfApellido;

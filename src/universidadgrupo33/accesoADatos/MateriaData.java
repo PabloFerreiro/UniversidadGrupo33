@@ -1,4 +1,4 @@
-// dia: 18/09/23 hs: 12:20
+// dia: 18/09/23 hs: 17:45
 package universidadgrupo33.accesoADatos;
 
 import java.sql.Connection;
@@ -53,7 +53,8 @@ public class MateriaData {
      //Método buscarMateria
       public Materia buscarMateria(int id, int bajaActivo) {
           
-        String sql = "SELECT nombre, anio, estado FROM materia WHERE idMateria=? AND estado=?";
+        //String sql = "SELECT nombre, anio, estado FROM materia WHERE idMateria=? AND estado=?";
+        String sql = "SELECT nombre, anio, estado FROM materia WHERE idMateria=?";
         Materia materia = null;
 
         try {

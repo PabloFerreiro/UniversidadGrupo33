@@ -155,12 +155,13 @@ public class AlumnoData {
         
     //método buscar alumno por dni
     public Alumno buscarAlumnoPorDni(int dni, int bajaActivo) {
-        String sql = "SELECT idAlumno, dni, apellido, nombre, fechaNacimiento, estado FROM alumno WHERE dni = ? AND estado = ?";
+        //String sql = "SELECT idAlumno, dni, apellido, nombre, fechaNacimiento, estado FROM alumno WHERE dni = ? AND estado = ?";
+        String sql = "SELECT idAlumno, dni, apellido, nombre, fechaNacimiento, estado FROM alumno WHERE dni = ?";
         Alumno alumno = null;
         try {
             PreparedStatement ps=con.prepareStatement(sql);
             ps.setInt(1, dni);
-            ps.setInt(2, bajaActivo);
+            //ps.setInt(2, bajaActivo);
             ResultSet rs=ps.executeQuery();
             if (rs.next()) {
                 alumno=new Alumno();

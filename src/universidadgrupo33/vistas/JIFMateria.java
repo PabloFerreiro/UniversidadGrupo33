@@ -1,4 +1,4 @@
-// dia: 18/09/23 hs: 12:20
+// dia: 18/09/23 hs: 17:45
 package universidadgrupo33.vistas;
 
 import com.toedter.calendar.JDateChooser;
@@ -59,7 +59,16 @@ public class JIFMateria extends javax.swing.JInternalFrame {
         if (opcTrabajo==0) {
             if (eleccion == JOptionPane.YES_OPTION) {
                 // habilitar los campos para ingresar los datos del alumno nuevo           
-                editarObloquearIngresos(true, true, true, true);
+                editarObloquearIngresos(false, true, true, true);
+                jbGuardar.setEnabled(true);
+                jrbEstado.setSelected(true);
+                jLEstado.setForeground(Color.blue);
+                jLEstado.setText("Activo");
+                modifica="N";
+                
+                
+                
+                
             } else {
                 //    if (eleccion == JOptionPane.NO_OPTION) {
                 //       JOptionPane.showMessageDialog(this, "xxxxxxxxxxxxx");
@@ -71,6 +80,10 @@ public class JIFMateria extends javax.swing.JInternalFrame {
             return true;
         }else {        
             if (eleccion == JOptionPane.YES_OPTION) {
+                jbGuardar.setEnabled(false);
+                jbEliminar.setEnabled(false);
+                jbModificar.setEnabled(false);
+                jbRecuperar.setEnabled(false);
                 return true;                
             } else {
                 return false;
@@ -83,6 +96,10 @@ public class JIFMateria extends javax.swing.JInternalFrame {
         this.setTitle("UNIVERSIDAD ULP - Gestión de Materia");
         limpiarDatos(0);
         editarObloquearIngresos(true,false,false,false);
+        jbGuardar.setEnabled(false);
+        jbModificar.setEnabled(false);
+        jbEliminar.setEnabled(false);
+        jbRecuperar.setEnabled(false);
         modifica="";    
         recuperar="";    
         
@@ -109,7 +126,7 @@ public class JIFMateria extends javax.swing.JInternalFrame {
         jbEliminar = new javax.swing.JButton();
         jbGuardar = new javax.swing.JButton();
         jbModificar = new javax.swing.JButton();
-        jBRecuperar = new javax.swing.JButton();
+        jbRecuperar = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jtfAño = new javax.swing.JTextField();
 
@@ -186,11 +203,11 @@ public class JIFMateria extends javax.swing.JInternalFrame {
             }
         });
 
-        jBRecuperar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jBRecuperar.setText("Recuperar");
-        jBRecuperar.addActionListener(new java.awt.event.ActionListener() {
+        jbRecuperar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jbRecuperar.setText("Recuperar");
+        jbRecuperar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBRecuperarActionPerformed(evt);
+                jbRecuperarActionPerformed(evt);
             }
         });
 
@@ -224,7 +241,7 @@ public class JIFMateria extends javax.swing.JInternalFrame {
                                         .addComponent(jbGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(60, 60, 60)
                                         .addComponent(jbModificar))
-                                    .addComponent(jBRecuperar))
+                                    .addComponent(jbRecuperar))
                                 .addGap(38, 38, 38)
                                 .addComponent(jbSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -289,7 +306,7 @@ public class JIFMateria extends javax.swing.JInternalFrame {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jbSalir)
                                 .addComponent(jbEliminar)
-                                .addComponent(jBRecuperar)))
+                                .addComponent(jbRecuperar)))
                         .addComponent(jbNuevo, javax.swing.GroupLayout.Alignment.LEADING))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -348,12 +365,20 @@ public class JIFMateria extends javax.swing.JInternalFrame {
                 if (jrbEstado.isSelected())
                 {                    
                     jLEstado.setForeground(Color.blue);
-                    //jLEstado.setBackground(Color.white);
                     jLEstado.setText("Activo");
+                    jbGuardar.setEnabled(false);
+                    jbModificar.setEnabled(true);
+                    jbEliminar.setEnabled(true);
+                    jbRecuperar.setEnabled(false);
+        
                 }else {                    
                     jLEstado.setForeground (Color.red);
                     //jLEstado.setBackground(Color.white);
                     jLEstado.setText("Baja");
+                    jbGuardar.setEnabled(false);
+                    jbModificar.setEnabled(false);
+                    jbEliminar.setEnabled(false);
+                    jbRecuperar.setEnabled(true);
                 }                                
                 // para establecer la fecha localdate de la clase alumno y pasarla a un textfield               
                 // este metodo de trasformacion no funciona para el tipo de muestreo de la fecha en jtextfiend
@@ -411,14 +436,27 @@ public class JIFMateria extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbSalirActionPerformed
 
     private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
+        
+        //ESTA LINEA ES PARA TRABAJARLA, PARA QUE MUESTRE CUAL ES EL SIGUIENTE CODIGO DISPONIBLE
+        //DE MATERIA
+        //SELECT idMateria FROM materia ORDER BY idMateria DESC LIMIT 1;
+        
         limpiarDatos(0);
         editarObloquearIngresos(true,false,false,false);
+        jbGuardar.setEnabled(false);
+        jbModificar.setEnabled(false);
+        jbEliminar.setEnabled(false);
+        jbRecuperar.setEnabled(false);
+        
         // informa en esa variable -modifica- con una letra "N" de que se debe realizar un INSERT (ALTA/SQL)
         modifica="N";
     }//GEN-LAST:event_jbNuevoActionPerformed
 
     private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
-        editarObloquearIngresos(false,true,true,true);     
+        editarObloquearIngresos(false,true,true,true); 
+        jbGuardar.setEnabled(true);
+        jbEliminar.setEnabled(false);
+        jbModificar.setEnabled(false);
         // informa en esa variable -modifica- con una letra "M" de que se debe realizar un UPDATE (MODIFICACION/SQL)
         modifica="M";        
     }//GEN-LAST:event_jbModificarActionPerformed
@@ -461,12 +499,12 @@ public class JIFMateria extends javax.swing.JInternalFrame {
         //modifica="";
     }//GEN-LAST:event_jbGuardarActionPerformed
 
-    private void jBRecuperarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBRecuperarActionPerformed
-        if (recuperar == "") {
-            // habilita la variable -recuperar="R"- para que cuando busque un DNI sea a los que figuren de Baja
-            // o sea con estado=0
-            recuperar = "R";
-        } else {
+    private void jbRecuperarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRecuperarActionPerformed
+//        if (recuperar == "") {
+//            // habilita la variable -recuperar="R"- para que cuando busque un DNI sea a los que figuren de Baja
+//            // o sea con estado=0
+//            recuperar = "R";
+//        } else {
             // envia un 4 cuando es para Recuperar un alumno Eliminado Logicamente
             if (verSiRegistraMateriaNueva(4, "Recuperar la Materia ELiminada", "Cancelar", "ATENCION!!! (Opc.RECUPERAR)")) {
                 MateriaData mat = new MateriaData();
@@ -487,8 +525,8 @@ public class JIFMateria extends javax.swing.JInternalFrame {
                 }
                 recuperar = "";
             }
-        }
-    }//GEN-LAST:event_jBRecuperarActionPerformed
+//        }
+    }//GEN-LAST:event_jbRecuperarActionPerformed
 
     private void jtfAñoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfAñoActionPerformed
         // TODO add your handling code here:
@@ -496,7 +534,6 @@ public class JIFMateria extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jBRecuperar;
     private javax.swing.JLabel jLEstado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -508,6 +545,7 @@ public class JIFMateria extends javax.swing.JInternalFrame {
     private javax.swing.JButton jbGuardar;
     private javax.swing.JButton jbModificar;
     private javax.swing.JButton jbNuevo;
+    private javax.swing.JButton jbRecuperar;
     private javax.swing.JButton jbSalir;
     private javax.swing.JRadioButton jrbEstado;
     private javax.swing.JTextField jtfAño;
