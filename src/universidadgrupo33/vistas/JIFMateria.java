@@ -1,22 +1,91 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+// dia: 18/09/23 hs: 12:20
 package universidadgrupo33.vistas;
+
+import com.toedter.calendar.JDateChooser;
+import java.awt.Color;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import universidadgrupo33.accesoADatos.MateriaData;
+import universidadgrupo33.entidades.Materia;
 
 /**
  *
  * @author Pablo
  */
 public class JIFMateria extends javax.swing.JInternalFrame {
+    public String modifica="";    
+    public String recuperar="";    
+    public int idMateriaSql=0;
 
-    /**
-     * Creates new form JIFMateria
-     */
+    private DefaultTableModel modelo=new DefaultTableModel()
+    {
+        @Override
+        public boolean isCellEditable(int fila, int columna) {
+
+            // BLOQUEO ESTAS LINEAS PARA QUE LO QUE MUESTRE EN LA TABLE NO PUEDAN SER MODIFICADO
+            /*
+            if (columna==1 || columna==2)
+            {
+               return true; // significa que la columna de posicion nro 2 permitira ser 
+                            // MODIFICADA dentro de la tabla
+            } 
+            */
+            return false; // significa que todas las filas y columna de la tabla NO permitira ser 
+            // modificcas dentro de la tabla               
+        }             
+    };
+    
+    // PARA PODER CREAR UN OPCION DE ELEGIR SI DESEA AGREGAR UN ALUMNO NUEVO
+    public boolean verSiRegistraMateriaNueva(int opcTrabajo, String txtOpcion1, String txtOpcion2, String txtOpcion3)
+    {
+        String botones[] = {txtOpcion1, txtOpcion2};
+        int eleccion = JOptionPane.showOptionDialog(this, txtOpcion3, "Titulo",
+                0, 0, null, botones, this);
+        // opxTrabajo=0 es para cuando no existe el DNI y ofrese AGREGAR-NUEVO alumno
+        // opxTrabajo=1 es para cuando quiere ELIMINAR un alumno, primero pregunta si quiere
+        // opxTrabajo=2 es para cuando quiere GRABAR-NUEVO alumno, primero pregunta si quiere
+        // opxTrabajo=3 es para cuando quiere MODIFICAR un alumno, primero pregunta si quiere
+        // opxTrabajo=4 es para cuando quiere RECUPERAR un alumno eliminado logicamente, primero pregunta si quiere
+        if (opcTrabajo==0) {
+            if (eleccion == JOptionPane.YES_OPTION) {
+                // habilitar los campos para ingresar los datos del alumno nuevo           
+                editarObloquearIngresos(true, true, true, true);
+            } else {
+                //    if (eleccion == JOptionPane.NO_OPTION) {
+                //       JOptionPane.showMessageDialog(this, "xxxxxxxxxxxxx");
+                //    }
+                limpiarDatos(0);
+                editarObloquearIngresos(true, false, false, false);
+                modifica = "";
+            }
+            return true;
+        }else {        
+            if (eleccion == JOptionPane.YES_OPTION) {
+                return true;                
+            } else {
+                return false;
+            }
+        }
+    }
+    
     public JIFMateria() {
-        initComponents();
+        initComponents();        
         this.setTitle("UNIVERSIDAD ULP - Gestión de Materia");
+        limpiarDatos(0);
+        editarObloquearIngresos(true,false,false,false);
+        modifica="";    
+        recuperar="";    
+        
     }
 
     /**
@@ -28,44 +97,60 @@ public class JIFMateria extends javax.swing.JInternalFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        jtfIdMateria = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jtfCodigo = new javax.swing.JTextField();
+        jLEstado = new javax.swing.JLabel();
         jtfNombre = new javax.swing.JTextField();
-        jtfanio = new javax.swing.JTextField();
         jrbEstado = new javax.swing.JRadioButton();
-        jbSalir = new javax.swing.JButton();
         jbBuscar = new javax.swing.JButton();
         jbNuevo = new javax.swing.JButton();
+        jbSalir = new javax.swing.JButton();
         jbEliminar = new javax.swing.JButton();
-        ibGuardar = new javax.swing.JButton();
+        jbGuardar = new javax.swing.JButton();
+        jbModificar = new javax.swing.JButton();
+        jBRecuperar = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        jtfAño = new javax.swing.JTextField();
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel1.setText("Gestión de Materia");
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel2.setText("Código:");
+        jLabel2.setText("Codigo:");
 
-        jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel3.setText("Nombre:");
+        jtfIdMateria.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel4.setText("Año:");
+        jLabel4.setText("Nombre:");
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel5.setText("Estado:");
 
-        jtfCodigo.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jLEstado.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLEstado.setText("......");
 
         jtfNombre.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
 
-        jtfanio.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-
-        jrbEstado.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jrbEstado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jrbEstadoActionPerformed(evt);
+            }
+        });
+
+        jbBuscar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jbBuscar.setText("Buscar");
+        jbBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbBuscarActionPerformed(evt);
+            }
+        });
+
+        jbNuevo.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jbNuevo.setText("Nuevo");
+        jbNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbNuevoActionPerformed(evt);
             }
         });
 
@@ -77,17 +162,6 @@ public class JIFMateria extends javax.swing.JInternalFrame {
             }
         });
 
-        jbBuscar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jbBuscar.setText("Buscar");
-
-        jbNuevo.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jbNuevo.setText("Nuevo");
-        jbNuevo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbNuevoActionPerformed(evt);
-            }
-        });
-
         jbEliminar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jbEliminar.setText("Eliminar");
         jbEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -96,11 +170,37 @@ public class JIFMateria extends javax.swing.JInternalFrame {
             }
         });
 
-        ibGuardar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        ibGuardar.setText("Guardar");
-        ibGuardar.addActionListener(new java.awt.event.ActionListener() {
+        jbGuardar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jbGuardar.setText("Guardar");
+        jbGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ibGuardarActionPerformed(evt);
+                jbGuardarActionPerformed(evt);
+            }
+        });
+
+        jbModificar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jbModificar.setText("Modificar");
+        jbModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbModificarActionPerformed(evt);
+            }
+        });
+
+        jBRecuperar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jBRecuperar.setText("Recuperar");
+        jBRecuperar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBRecuperarActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel6.setText("Año;");
+
+        jtfAño.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jtfAño.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfAñoActionPerformed(evt);
             }
         });
 
@@ -112,103 +212,351 @@ public class JIFMateria extends javax.swing.JInternalFrame {
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jbNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jbEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(46, 46, 46)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jbGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(60, 60, 60)
+                                        .addComponent(jbModificar))
+                                    .addComponent(jBRecuperar))
+                                .addGap(38, 38, 38)
+                                .addComponent(jbSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addGap(30, 30, 30)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jtfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jtfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jtfanio, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jrbEstado, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jbBuscar))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jbNuevo)
-                                .addGap(18, 18, 18)
-                                .addComponent(jbEliminar)
-                                .addGap(18, 18, 18)
-                                .addComponent(ibGuardar)
-                                .addGap(42, 42, 42)
-                                .addComponent(jbSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 45, Short.MAX_VALUE))))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addComponent(jtfIdMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(77, 77, 77))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jtfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jtfAño, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGroup(layout.createSequentialGroup()
+                                                        .addComponent(jrbEstado)
+                                                        .addGap(18, 18, 18)
+                                                        .addComponent(jLEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addGap(0, 429, Short.MAX_VALUE)))
+                                .addComponent(jbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addComponent(jLabel1)
-                .addGap(40, 40, 40)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jbBuscar)
-                    .addComponent(jtfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(20, 20, 20)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(41, 41, 41)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jtfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jtfIdMateria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbBuscar))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jtfanio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19)
+                    .addComponent(jtfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jtfAño, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jrbEstado)
                     .addComponent(jLabel5)
-                    .addComponent(jrbEstado))
+                    .addComponent(jLEstado))
                 .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ibGuardar)
-                    .addComponent(jbNuevo)
-                    .addComponent(jbEliminar)
-                    .addComponent(jbSalir))
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(51, 51, 51)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jbSalir)
+                                .addComponent(jbEliminar)
+                                .addComponent(jBRecuperar)))
+                        .addComponent(jbNuevo, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jbGuardar)
+                            .addComponent(jbModificar))
+                        .addGap(51, 51, 51)))
+                .addGap(29, 29, 29))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jrbEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbEstadoActionPerformed
-        // TODO add your handling code here:
+        if(jrbEstado.isSelected()){           
+            jLEstado.setForeground(Color.blue);
+            //jLEstado.setBackground(Color.white);
+            jLEstado.setText("Activo");
+        }else {
+            jLEstado.setForeground (Color.red);
+            //jLEstado.setBackground(Color.white);
+            jLEstado.setText("Baja");
+        }        
     }//GEN-LAST:event_jrbEstadoActionPerformed
 
+    private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
+        //Método buscar Alumno por Dni 
+        // va a buscar el DNI ingresadpp en la db sql            
+        String esta="N";
+        int tipoEstado=0;
+        try 
+        {            
+            MateriaData mat=new MateriaData();
+            // verifica si la variable -recuperar="R"- para buscar el DNI que tenga estado=0
+            if (recuperar=="R")
+            {
+                // bucara al DNI que figure con estado=0 en sql (Baja Logica)
+                tipoEstado=0;
+            }else {
+                // bucara al DNI que figure con estado=1 en sql (Activo)
+                tipoEstado=1;
+            }
+            Materia materiaEncontrada=mat.buscarMateria(Integer.parseInt(jtfIdMateria.getText()),tipoEstado);
+            if (materiaEncontrada!=null){
+                // si encontro al alumno actualziar los datos de los textfield            
+                // en esta asignacion a la variable -idAlumnoSql- guardo el nro de IdAlumno leido de Sql para usar mas adelante
+                idMateriaSql=materiaEncontrada.getIdMateria();                                               
+                jtfNombre.setText(materiaEncontrada.getNombre());                
+                jtfAño.setText(materiaEncontrada.getAño()+"");                
+                // de esta manera se puede asignar el radio button prendido(true) o apagado(false)
+                //jrbEstado.setSelected(true);
+                jrbEstado.setSelected(materiaEncontrada.isEstado());
+                //System.out.println("Estado leido:"+alumnoEncontrado.isActivo());
+                //este no: System.out.println("Estado guardado:"+jrbEstado.getHideActionText());
+                //este si: System.out.println("Estado guardado:"+jrbEstado.isSelected());
+                //este no: if (jrbEstado.getHideActionText()==false)
+                if (jrbEstado.isSelected())
+                {                    
+                    jLEstado.setForeground(Color.blue);
+                    //jLEstado.setBackground(Color.white);
+                    jLEstado.setText("Activo");
+                }else {                    
+                    jLEstado.setForeground (Color.red);
+                    //jLEstado.setBackground(Color.white);
+                    jLEstado.setText("Baja");
+                }                                
+                // para establecer la fecha localdate de la clase alumno y pasarla a un textfield               
+                // este metodo de trasformacion no funciona para el tipo de muestreo de la fecha en jtextfiend
+                /*                
+                DateTimeFormatter formateo = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+                String fechaComoTexto = alumnoEncontrado.getFechaNac().format(formateo);
+                jDateChooser1.setDateFormatString(fechaComoTexto);                
+                //System.out.println("fecha: "+fechaComoTexto);                
+                */                                
+                esta="S";                            
+                editarObloquearIngresos(false,false,false,false);
+            }        
+            if (esta=="N")
+            {
+                //JOptionPane.showMessageDialog(this, "Error1: NO EXISTE ESTE DNI");
+                limpiarDatos(1);                
+                editarObloquearIngresos(false,true,true,true);
+                // envia un 0 cuando es para Agregar una materia nueva
+                verSiRegistraMateriaNueva(0,"Agregar una Materia Nueva", "Cancelar", "ATENCION!!! (Opc.NUEVO)");                
+            }            
+        }         
+        catch (NumberFormatException nfe) 
+        {
+            JOptionPane.showMessageDialog(this, "Error: Debe ingresar un valor numérico");
+        }catch (Exception vma) 
+        {
+            JOptionPane.showMessageDialog(this, "Error: Algun campo sin Informacion");
+        }
+    }//GEN-LAST:event_jbBuscarActionPerformed
+
+    private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
+        // envia un 1 cuando es para Eliminar un alumno 
+        if (verSiRegistraMateriaNueva(1, "Eliminar a la Materia", "Cancelar", "ATENCION!!! (Opc.ELIMINAR)")) {
+            MateriaData mat = new MateriaData();
+            Materia mat1 = new Materia();
+            int resultadoExito = mat.eliminarMateria(idMateriaSql);
+            if (resultadoExito == 1) {
+                mat1.setEstado(false);
+                jrbEstado.setSelected(mat1.isEstado());
+            }
+            if (jrbEstado.isSelected()) {
+                jLEstado.setForeground(Color.blue);
+                //jLEstado.setBackground(Color.white);
+                jLEstado.setText("Activo");
+            } else {
+                jLEstado.setForeground(Color.red);
+                //jLEstado.setBackground(Color.white);
+                jLEstado.setText("Baja");
+            }
+        }
+    }//GEN-LAST:event_jbEliminarActionPerformed
+
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
-    this.dispose();
+    this.dispose(); 
     }//GEN-LAST:event_jbSalirActionPerformed
 
     private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
-        // TODO add your handling code here:
+        limpiarDatos(0);
+        editarObloquearIngresos(true,false,false,false);
+        // informa en esa variable -modifica- con una letra "N" de que se debe realizar un INSERT (ALTA/SQL)
+        modifica="N";
     }//GEN-LAST:event_jbNuevoActionPerformed
 
-    private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jbEliminarActionPerformed
+    private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
+        editarObloquearIngresos(false,true,true,true);     
+        // informa en esa variable -modifica- con una letra "M" de que se debe realizar un UPDATE (MODIFICACION/SQL)
+        modifica="M";        
+    }//GEN-LAST:event_jbModificarActionPerformed
 
-    private void ibGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ibGuardarActionPerformed
+    private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
+        int resultadoExito=0;
+        MateriaData mat = new MateriaData();
+        Materia materia = new Materia();        
+        //materia.setIdMateria(idMateriaSql);
+        materia.setIdMateria(Integer.parseInt(jtfIdMateria.getText()));
+        materia.setNombre(jtfNombre.getText());
+        materia.setAño(Integer.parseInt(jtfAño.getText()));
+        materia.setEstado(jrbEstado.isSelected());                
+        // verifica que valor tiene la variable -modifica-, si es una "N" debe GRABAR-(INSERT/SQL)
+        // o si el valor es "M" debe MODIFICAR-(UPDATE/SQL)
+        //System.out.println("modifica="+modifica);        
+        if (modifica=="N")
+        {
+            if (verSiRegistraMateriaNueva(2, "Guardar a la Nueva Materia", "Cancelar", "ATENCION!!! (Opc.GUARDAR-NUEVO)")) {
+                resultadoExito = mat.guardarMateria(materia);
+                limpiarDatos(0);
+                editarObloquearIngresos(true,false,false,false);        
+                modifica="";
+            }
+        }else{
+            if (verSiRegistraMateriaNueva(3, "Modificar datos de la Materia", "Cancelar", "ATENCION!!! (Opc.MODIFICAR)")) {
+                resultadoExito = mat.modificarMateria(materia);
+                limpiarDatos(0);
+                editarObloquearIngresos(true,false,false,false);        
+                modifica="";
+            }
+        }                
+        if (resultadoExito == 1) {
+            // se guardo/modifico con exito
+        } else {
+            // no se pudo guardar/moficar
+        }
+        //limpiarDatos(0);
+        //editarObloquearIngresos(true,false,false,false,false);        
+        //modifica="";
+    }//GEN-LAST:event_jbGuardarActionPerformed
+
+    private void jBRecuperarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBRecuperarActionPerformed
+        if (recuperar == "") {
+            // habilita la variable -recuperar="R"- para que cuando busque un DNI sea a los que figuren de Baja
+            // o sea con estado=0
+            recuperar = "R";
+        } else {
+            // envia un 4 cuando es para Recuperar un alumno Eliminado Logicamente
+            if (verSiRegistraMateriaNueva(4, "Recuperar la Materia ELiminada", "Cancelar", "ATENCION!!! (Opc.RECUPERAR)")) {
+                MateriaData mat = new MateriaData();
+                Materia mat1 = new Materia();
+                int resultadoExito = mat.recuperarMateria(idMateriaSql);
+                if (resultadoExito == 1) {
+                    mat1.setEstado(true);
+                    jrbEstado.setSelected(mat1.isEstado());
+                }
+                if (jrbEstado.isSelected()) {
+                    jLEstado.setForeground(Color.blue);
+                    //jLEstado.setBackground(Color.white);
+                    jLEstado.setText("Activo");
+                } else {
+                    jLEstado.setForeground(Color.red);
+                    //jLEstado.setBackground(Color.white);
+                    jLEstado.setText("Baja");
+                }
+                recuperar = "";
+            }
+        }
+    }//GEN-LAST:event_jBRecuperarActionPerformed
+
+    private void jtfAñoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfAñoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ibGuardarActionPerformed
+    }//GEN-LAST:event_jtfAñoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton ibGuardar;
+    private javax.swing.JButton jBRecuperar;
+    private javax.swing.JLabel jLEstado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JButton jbBuscar;
     private javax.swing.JButton jbEliminar;
+    private javax.swing.JButton jbGuardar;
+    private javax.swing.JButton jbModificar;
     private javax.swing.JButton jbNuevo;
     private javax.swing.JButton jbSalir;
     private javax.swing.JRadioButton jrbEstado;
-    private javax.swing.JTextField jtfCodigo;
+    private javax.swing.JTextField jtfAño;
+    private javax.swing.JTextField jtfIdMateria;
     private javax.swing.JTextField jtfNombre;
-    private javax.swing.JTextField jtfanio;
     // End of variables declaration//GEN-END:variables
+
+
+    public void editarObloquearIngresos(boolean txt1,boolean txt2,boolean txt3,boolean txt4)
+    {
+        // setEditable() PERMITE HABILITAR O DESAHBILITAR EL INGRESO DE DATOS EN LOS CAMPOS TEXTFIELD 
+        // setEnabled() PERMITE HABILITAR O DESAHBILITAR EL INGRESO DE DATOS y  NO PODER SELECCIONAR EN LOS CAMPOS TEXTFIELD         
+        if (txt1) {jtfIdMateria.setEditable(true);
+                   jtfIdMateria.setEnabled(true);
+        }else {jtfIdMateria.setEditable(false);
+               jtfIdMateria.setEnabled(false);}        
+        if (txt2) {jtfNombre.setEditable(true);
+                   jtfNombre.setEnabled(true);
+        }else {jtfNombre.setEditable(false);
+               jtfNombre.setEnabled(false);}
+        if (txt3) {jtfAño.setEnabled(true);
+        }else {jtfAño.setEnabled(false);}        
+        if (txt4) {jrbEstado.setEnabled(true);
+        }else {jrbEstado.setEnabled(false);}        
+               
+    }
+
+    private void limpiarDatos(int elijoCodigo) 
+    {
+        // LIMPIA LOS CAMPOS        
+        if (elijoCodigo==0)
+        {
+            jtfIdMateria.setText("");
+            idMateriaSql=0;               
+        }                
+        jtfNombre.setText("");                
+        jtfAño.setText("");                
+        jrbEstado.setSelected(false);        
+        if(jrbEstado.isSelected()){           
+            jLEstado.setForeground(Color.blue);
+            //jLEstado.setBackground(Color.white);
+            jLEstado.setText("Activo");
+        }else {
+            jLEstado.setForeground (Color.red);
+            //jLEstado.setBackground(Color.white);
+            jLEstado.setText("Baja");
+        }                
+    }
+    
+    
 }
+

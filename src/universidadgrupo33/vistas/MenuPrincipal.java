@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+// dia: 18/09/23 hs: 3:16
 package universidadgrupo33.vistas;
 
 import java.awt.Dimension;
@@ -11,20 +7,16 @@ import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Pablo
- */
-public class MenuPrincipal extends javax.swing.JFrame {
+import java.io.PrintStream;
+import javax.swing.JLabel;
+// para que capture lo que se ingreso por la pantalla 
+import javax.swing.JTextField;
 
-    /**
-     * Creates new form MenuPrincipal
-     * @return 
-     */    
-    
+
+public class MenuPrincipal extends javax.swing.JFrame {    
     // PARA PODER CREAR UN OPCION DE ELEGIR SI DESEA SALIR O NO CUANDO PRESIONA -SALIR o X-
     public void Cerrar(int tipo)
-    {
+    {         
         String botones[] = {"Cerrar", "Cancelar"};
         int eleccion = JOptionPane.showOptionDialog(this, "¿Desea cerrar la Aplicación?", "Titulo",
                 0, 0, null, botones, this);
@@ -47,12 +39,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
     public MenuPrincipal() {
         initComponents();
         setLocationRelativeTo(null);
-        this.setTitle("UNIVERSIDAD ULP");
+        this.setTitle("UNIVERSIDAD ULP");        
         // las siguientes 3 lineas permiten visualiar el logo de la empresa del sistema
         Image iconoPropio = Toolkit.getDefaultToolkit().getImage(getClass().getResource("Grupo332023.png"));
         setIconImage(iconoPropio);
-        //setVisible(true);
-       
+        setVisible(true);
+        //jmSalir.setFocusTraversalKeysEnabled(true);
+        editarObloquearMenues(false,false,false,false,false,true);
+        
         
     }
 
@@ -75,6 +69,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jmConsultas = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jmSalir = new javax.swing.JMenu();
+        jmIniciarSesion = new javax.swing.JMenu();
+        jMIIngresar = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(getIconImage());
@@ -87,7 +83,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         );
         jdpEscritorioLayout.setVerticalGroup(
             jdpEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 693, Short.MAX_VALUE)
+            .addGap(0, 686, Short.MAX_VALUE)
         );
 
         jmAlumno.setText("Alumno");
@@ -164,6 +160,22 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
         jMenuBar1.add(jmSalir);
 
+        jmIniciarSesion.setBackground(new java.awt.Color(255, 255, 102));
+        jmIniciarSesion.setForeground(new java.awt.Color(0, 51, 204));
+        jmIniciarSesion.setText(" (Iniciar-Sesion)");
+        jmIniciarSesion.setFont(new java.awt.Font("Segoe UI Black", 1, 22)); // NOI18N
+
+        jMIIngresar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jMIIngresar.setText("Ingresar");
+        jMIIngresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIIngresarActionPerformed(evt);
+            }
+        });
+        jmIniciarSesion.add(jMIIngresar);
+
+        jMenuBar1.add(jmIniciarSesion);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -188,12 +200,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jifalumno.setVisible(true);
         jdpEscritorio.add(jifalumno);
         jdpEscritorio.moveToFront(jifalumno);
-
         // Lineas para centrar el jInternalFrame dentro del desktopPane
         Dimension desktopSize = jdpEscritorio.getSize();
         Dimension jInternalFrameSize = jifalumno.getSize();
         jifalumno.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
         (desktopSize.height - jInternalFrameSize.height) / 2);
+                
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
@@ -257,9 +269,51 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jmSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmSalirMouseClicked
-    Cerrar(1);
+    // cuando habilito esta linea me obliga a hacer doble-click con el raton para contestar un dialogo
+    Cerrar(1);        
+    // cuando uso esta orden se ejecuta con un solo click del raton, todo bien asi....
+    //System.exit(0);
     }//GEN-LAST:event_jmSalirMouseClicked
+    
+    private void jMIIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIIngresarActionPerformed
+        jdpEscritorio.removeAll();
+        jdpEscritorio.repaint();        
+        UsuarioPassw usuPas = new UsuarioPassw();        
+        usuPas.setVisible(true);        
+        jdpEscritorio.add(usuPas);
+        jdpEscritorio.moveToFront(usuPas);                
+        // Lineas para centrar el jInternalFrame dentro del desktopPane
+        Dimension desktopSize = jdpEscritorio.getSize();
+        Dimension jInternalFrameSize = usuPas.getSize();
+        usuPas.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+        (desktopSize.height - jInternalFrameSize.height) / 2);
+        // activa los menues a utilizar, salvo a de inciarSesion que debera mantenerse asi hasta el final
+        editarObloquearMenues(true,true,true,true,true,false);                
+        // con esta linea cambia el nombre de la opcion -jmIniciarSesion- para que no sea visto hasta terminar el 
+        // uso del sistema, porque solo se usa una sola vez al ingresar al sistema...
+        jmIniciarSesion.setText("(Ingresando y Validando Ingreso al Sistema)");       
+        //jmIniciarSesion.setText("(Trabajando-en-el-Sistema)");       
+        // rearma la visual del menu principal -jdpEscrotorio-
+        //jdpEscritorio.repaint();                
+                
+    }//GEN-LAST:event_jMIIngresarActionPerformed
 
+    /*
+        jdpEscritorio.removeAll();
+        jdpEscritorio.repaint();
+        UsuarioPassw usuPas = new UsuarioPassw();
+        usuPas.setVisible(true);
+        jdpEscritorio.add(usuPas);
+        jdpEscritorio.moveToFront(usuPas);        
+        // Lineas para centrar el jInternalFrame dentro del desktopPane
+        Dimension desktopSize = jdpEscritorio.getSize();
+        Dimension jInternalFrameSize = usuPas.getSize();
+        usuPas.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+        (desktopSize.height - jInternalFrameSize.height) / 2);
+        // activa los menues a utilizar, salvo a de inciarSesion que debera mantenerse asi hasta el final
+        editarObloquearMenues(false,true,true,true,true,false);    
+    */
+    
     /**
      * @param args the command line arguments
      */
@@ -296,6 +350,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem jMIIngresar;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
@@ -306,7 +361,36 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jmAdministracion;
     private javax.swing.JMenu jmAlumno;
     private javax.swing.JMenu jmConsultas;
+    private javax.swing.JMenu jmIniciarSesion;
     private javax.swing.JMenu jmMateria;
     private javax.swing.JMenu jmSalir;
     // End of variables declaration//GEN-END:variables
+
+    // permite el bloqueo o habilitacion de los Jmenu
+    public void editarObloquearMenues(boolean txt1,boolean txt2,boolean txt3,boolean txt4,boolean txt5,boolean txt6)    
+    {
+        // setEditable() PERMITE HABILITAR O DESAHBILITAR EL INGRESO DE DATOS EN LOS CAMPOS TEXTFIELD 
+        // setEnabled() PERMITE HABILITAR O DESAHBILITAR EL INGRESO DE DATOS y  NO PODER SELECCIONAR EN LOS CAMPOS TEXTFIELD         
+        if (txt1) {jmAlumno.setEnabled(true);                
+        }else {jmAlumno.setEnabled(false);}               
+        if (txt2) {jmMateria.setEnabled(true);                
+        }else {jmMateria.setEnabled(false);}               
+        if (txt3) {jmAdministracion.setEnabled(true);                
+        }else {jmAdministracion.setEnabled(false);}                           
+        if (txt4) {jmConsultas.setEnabled(true);                
+        }else {jmConsultas.setEnabled(false);}               
+        if (txt5) {jmSalir.setEnabled(true);                
+        }else {jmSalir.setEnabled(false);}                       
+        if (txt6) {jmIniciarSesion.setEnabled(true);                
+        }else {jmIniciarSesion.setEnabled(false);}          
+        //System.out.println("txt5="+jmSalir.getFocusTraversalKeysEnabled());
+        //System.out.println("txt6="+jmIniciarSesion.getFocusTraversalKeysEnabled());        
+    }
+    
+
+
+
+
+
+
 }

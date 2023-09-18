@@ -231,13 +231,6 @@ public class InscripcionData {
           return resumen;
         };
           
-          
-          
-          
-          
-          
-          
-          
         //método obtener materias cursadas
           public List<Materia> obtenerMateriasCursadas(int id) {
             List<Materia> materias = new ArrayList<Materia>();
@@ -297,13 +290,14 @@ public class InscripcionData {
           };
           
         //método borrar inscripcion materia alumno
-           public void borrarInscripcionMateriaAlumno(int idAlumno, int idMateria){              
+           public int borrarInscripcionMateriaAlumno(int idAlumno, int idMateria){              
               String sql = "DELETE FROM inscripcion WHERE idAlumno=? AND idMateria=?";
+              int exito = 0;
               try {
                   PreparedStatement ps = con.prepareStatement(sql);                  
                   ps.setInt(1, idAlumno);
                   ps.setInt(2, idMateria);
-                  int exito = ps.executeUpdate();
+                  exito = ps.executeUpdate();
                   if (exito == 1) {
                       JOptionPane.showMessageDialog(null, "Alumno y su Materia Borrado");
                   } else {
@@ -315,6 +309,7 @@ public class InscripcionData {
 
                   JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Inscripcion. No se pudo Borrar el alumno y/o su Materia" + ex.getMessage());
               }
+              return exito;
           };
           
         //método actualizar nota

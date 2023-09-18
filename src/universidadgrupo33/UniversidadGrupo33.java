@@ -1,4 +1,4 @@
-
+// dia: 18/09/23 hs: 12:20
 package universidadgrupo33;
 
 import java.time.LocalDate;
@@ -21,7 +21,6 @@ public class UniversidadGrupo33 {
         Conexion.getConexion();
         // PERMITE LA EJECUCION DEL SISTEMAS DESDE EL JFRAME PRINCIPAL
         MenuPrincipal.main(args);
-        
         
 //#########################################################################
 // CONEXIONES A ALUMNODATA
