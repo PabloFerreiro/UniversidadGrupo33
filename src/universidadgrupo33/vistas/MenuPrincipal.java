@@ -276,6 +276,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmSalirMouseClicked
     
     private void jMIIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIIngresarActionPerformed
+        /*
         jdpEscritorio.removeAll();
         jdpEscritorio.repaint();        
         UsuarioPassw usuPas = new UsuarioPassw();        
@@ -294,7 +295,10 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jmIniciarSesion.setText("(Ingresando y Validando Ingreso al Sistema)");       
         //jmIniciarSesion.setText("(Trabajando-en-el-Sistema)");       
         // rearma la visual del menu principal -jdpEscrotorio-
-        //jdpEscritorio.repaint();                
+        //jdpEscritorio.repaint();         
+        */
+        // activa los menues a utilizar, salvo a de inciarSesion que debera mantenerse asi hasta el final
+        editarObloquearMenues(true,true,true,true,true,false);     
                 
     }//GEN-LAST:event_jMIIngresarActionPerformed
 
