@@ -1,6 +1,7 @@
 
 package universidadgrupo33.entidades;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 
 public class Alumno {
@@ -94,7 +95,9 @@ public class Alumno {
     //to string
     @Override
     public String toString() {
-        return "Alumno{" + "idAlumno=" + idAlumno + ", dni=" + dni + ", apellido=" + apellido + ", nombre=" + nombre + ", fechaNac=" + fechaNac + ", activo=" + activo + '}';
+        DecimalFormat df = new DecimalFormat("000");
+        return "id: "+df.format(idAlumno)+", "+apellido +" "+nombre+ ", dni: " + dni;
+        
     }
     
     

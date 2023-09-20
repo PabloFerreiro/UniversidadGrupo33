@@ -1,24 +1,33 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+// dia: 19/09/23 hs: 17:45
 package universidadgrupo33.vistas;
+import java.text.DecimalFormat;
 import javax.swing.table.DefaultTableModel;
+import universidadgrupo33.accesoADatos.AlumnoData;
+import universidadgrupo33.accesoADatos.InscripcionData;
+import universidadgrupo33.accesoADatos.MateriaData;
+import universidadgrupo33.entidades.Alumno;
+import universidadgrupo33.entidades.Inscripcion;
+import universidadgrupo33.entidades.Materia;
 
-/**
- *
- * @author Pablo
- */
 public class JIFInscripciones extends javax.swing.JInternalFrame {
     private DefaultTableModel modelo = new DefaultTableModel(){
     public boolean isCellEditable (int f, int c){
     return false;
     }
     };
+    AlumnoData alu=new AlumnoData();
+    MateriaData mat=new MateriaData();
+    InscripcionData ins=new InscripcionData();
+    Alumno alu2=new Alumno();
+    Materia mat2=new Materia();
+    Inscripcion ins2=new Inscripcion();
+    // se usara esta variablñe para ser referencia del idALumno a buscar    
+    int idAlumnoABuscar=0;
+    
     public JIFInscripciones() {
         initComponents();
         armarCabecera();
+        cargarComboBoxALumnos();
         this.setTitle("UNIVERSIDAD ULP - Formulario de Inscripción");
     }
 
@@ -60,11 +69,25 @@ public class JIFInscripciones extends javax.swing.JInternalFrame {
         jLabel5.setText("Materias Inscriptas");
 
         jcbSeleccionAlumno.setFont(new java.awt.Font("Dialog", 1, 19)); // NOI18N
-        jcbSeleccionAlumno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcbSeleccionAlumno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbSeleccionAlumnoActionPerformed(evt);
+            }
+        });
 
         grupoBotones.add(jrbMateriasInscriptas);
+        jrbMateriasInscriptas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrbMateriasInscriptasActionPerformed(evt);
+            }
+        });
 
         grupoBotones.add(jrbjrbMateriasNoInscriptas);
+        jrbjrbMateriasNoInscriptas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrbjrbMateriasNoInscriptasActionPerformed(evt);
+            }
+        });
 
         jtResultadoSeleccionAlumnos.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jtResultadoSeleccionAlumnos.setModel(new javax.swing.table.DefaultTableModel(
@@ -177,6 +200,29 @@ public class JIFInscripciones extends javax.swing.JInternalFrame {
     this.dispose();
     }//GEN-LAST:event_jbSalirActionPerformed
 
+    private void jrbjrbMateriasNoInscriptasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbjrbMateriasNoInscriptasActionPerformed
+        modelo.setRowCount(0);        
+        for(Materia mater:ins.obtenerMateriasNoCursadas(idAlumnoABuscar)){      
+           modelo.addRow(new Object []{mater.getIdMateria(),
+                   mater.getNombre(),
+                   mater.getAño()});            
+        }        
+    }//GEN-LAST:event_jrbjrbMateriasNoInscriptasActionPerformed
+
+    private void jrbMateriasInscriptasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbMateriasInscriptasActionPerformed
+        modelo.setRowCount(0);        
+        for(Materia mater:ins.obtenerMateriasCursadas(idAlumnoABuscar)){      
+           modelo.addRow(new Object []{mater.getIdMateria(),
+                   mater.getNombre(),
+                   mater.getAño()});            
+        }        
+    }//GEN-LAST:event_jrbMateriasInscriptasActionPerformed
+
+    private void jcbSeleccionAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbSeleccionAlumnoActionPerformed
+        alu2  = (Alumno) jcbSeleccionAlumno.getSelectedItem();                
+        idAlumnoABuscar=alu2.getIdAlumno();
+        //System.out.println("x idAlumno a usar par buscar en Materias: "+idAlumnoABuscar);         
+    }//GEN-LAST:event_jcbSeleccionAlumnoActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup grupoBotones;
@@ -189,17 +235,42 @@ public class JIFInscripciones extends javax.swing.JInternalFrame {
     private javax.swing.JButton jbAnularInscripcion;
     private javax.swing.JButton jbInscribir;
     private javax.swing.JButton jbSalir;
-    private javax.swing.JComboBox<String> jcbSeleccionAlumno;
+    private javax.swing.JComboBox<Alumno> jcbSeleccionAlumno;
     private javax.swing.JRadioButton jrbMateriasInscriptas;
     private javax.swing.JRadioButton jrbjrbMateriasNoInscriptas;
     private javax.swing.JTable jtResultadoSeleccionAlumnos;
     // End of variables declaration//GEN-END:variables
 
     private void armarCabecera(){
-    modelo.addColumn("IdInscripción");
+    modelo.addColumn("IdMateria");
     modelo.addColumn("Nombre de materia");
     modelo.addColumn("Año");
     jtResultadoSeleccionAlumnos.setModel(modelo);
 
     }
+    
+    private void borrarFilas()
+    {
+        int filas = jtResultadoSeleccionAlumnos.getRowCount() - 1;
+        System.out.println(jtResultadoSeleccionAlumnos.getCellEditor());
+        System.out.println(filas);
+        for (int i = filas; i >= 0; i--) {
+            modelo.removeRow(i);
+        }
+    }
+    
+    private void cargarComboBoxALumnos()
+    {           
+        
+        //System.out.println("Entro a llenar el combobox");
+        // Vaciar el JComboBox
+        jcbSeleccionAlumno.removeAllItems();
+        for(Alumno alum:alu.listarAlumnos(1)){      
+            jcbSeleccionAlumno.addItem(alum); 
+        }        
+    }        
+    
+    
+    
+    
 }

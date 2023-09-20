@@ -1,4 +1,4 @@
-// dia: 18/09/23 hs: 17:45
+// dia: 20/09/23 hs: 2:20
 package universidadgrupo33.accesoADatos;
 
 import java.sql.Connection;
@@ -173,7 +173,32 @@ public class MateriaData {
         return materias;         
       };
       
-     
-     
+      //Método proximoIdMateria
+      public Materia proximoIdMateria() {                  
+        String sql = "SELECT idMateria, nombre, anio, estado FROM materia ORDER BY idMateria DESC";
+        Materia materia = null;
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);            
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                materia = new Materia();
+                materia.setIdMateria(rs.getInt("idMateria"));
+                materia.setNombre(rs.getString("nombre"));
+                materia.setAño(rs.getInt("anio"));                             
+                materia.setEstado(rs.getBoolean("estado"));
+                //JOptionPane.showMessageDialog(null, "MATERIA ENCONTRADA");             
+            } 
+            /*
+            else {
+                //JOptionPane.showMessageDialog(null, "No existe esa materia");
+            };
+            */
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Materia. No se pudo buscar la materia");
+        }
+        return materia;
+      };
+      
      
 }

@@ -187,7 +187,8 @@ public class AlumnoData {
     
     //método listar alumnos
     public List<Alumno> listarAlumnos(int bajaActivo) {
-        String sql = "SELECT idAlumno, dni, apellido, nombre, fechaNacimiento, estado FROM alumno WHERE estado = ?";
+        String sql = "SELECT idAlumno, dni, apellido, nombre, fechaNacimiento, estado FROM alumno WHERE estado = ?"
+                + " ORDER BY apellido, nombre ";
         ArrayList<Alumno> alumnos = new ArrayList<>();
         try {
             PreparedStatement ps=con.prepareStatement(sql);
