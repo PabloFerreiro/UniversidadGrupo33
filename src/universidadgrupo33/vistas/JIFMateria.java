@@ -1,8 +1,10 @@
-// dia: 20/09/23 hs: 2:20
+// dia: 20/09/23 hs: 10:10
 package universidadgrupo33.vistas;
 
 import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,7 +15,11 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 import universidadgrupo33.accesoADatos.MateriaData;
 import universidadgrupo33.entidades.Materia;
@@ -25,7 +31,7 @@ import universidadgrupo33.entidades.Materia;
 public class JIFMateria extends javax.swing.JInternalFrame {
     public String modifica="";    
     public String recuperar="";    
-    public int idMateriaSql=0;
+    public int idMateriaSql=0;    
 
     private DefaultTableModel modelo=new DefaultTableModel()
     {
@@ -65,10 +71,6 @@ public class JIFMateria extends javax.swing.JInternalFrame {
                 jLEstado.setForeground(Color.blue);
                 jLEstado.setText("Activo");
                 modifica="N";
-                
-                
-                
-                
             } else {
                 //    if (eleccion == JOptionPane.NO_OPTION) {
                 //       JOptionPane.showMessageDialog(this, "xxxxxxxxxxxxx");
@@ -76,19 +78,19 @@ public class JIFMateria extends javax.swing.JInternalFrame {
                 limpiarDatos(0);
                 editarObloquearIngresos(true, false, false, false);
                 modifica = "";
-            }
+            }            
             return true;
         }else {        
             if (eleccion == JOptionPane.YES_OPTION) {
                 jbGuardar.setEnabled(false);
                 jbEliminar.setEnabled(false);
                 jbModificar.setEnabled(false);
-                jbRecuperar.setEnabled(false);
+                jbRecuperar.setEnabled(false);                
                 return true;                
-            } else {
+            } else {                
                 return false;
             }
-        }
+        }        
     }
     
     public JIFMateria() {
@@ -401,7 +403,7 @@ public class JIFMateria extends javax.swing.JInternalFrame {
                 //System.out.println("fecha: "+fechaComoTexto);                
                 */                                
                 esta="S";                            
-                editarObloquearIngresos(false,false,false,false);
+                editarObloquearIngresos(false,false,false,false);                
             }        
             if (esta=="N")
             {
@@ -418,7 +420,7 @@ public class JIFMateria extends javax.swing.JInternalFrame {
         }catch (Exception vma) 
         {
             JOptionPane.showMessageDialog(this, "Error: Algun campo sin Informacion");
-        }
+        }        
     }//GEN-LAST:event_jbBuscarActionPerformed
 
     private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
@@ -440,7 +442,7 @@ public class JIFMateria extends javax.swing.JInternalFrame {
                 //jLEstado.setBackground(Color.white);
                 jLEstado.setText("Baja");
             }
-        }
+        }        
     }//GEN-LAST:event_jbEliminarActionPerformed
 
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
@@ -468,8 +470,10 @@ public class JIFMateria extends javax.swing.JInternalFrame {
         MateriaData mat = new MateriaData();
         Materia mat1 = new Materia();
         int ProximoIdMate=mat.proximoIdMateria().getIdMateria()+1;
+        // Activa el cartel bliqueador con la informacion del proximo IdMateria a crear
         jLProximoIdMAteria.setText("Proximo Codigo--> "+ProximoIdMate);        
-        jtfIdMateria.setText(ProximoIdMate+"");        
+        jtfIdMateria.setText(ProximoIdMate+"");                
+        //cartelBlinqueador("Proximo Codigo--> "+ProximoIdMate);        
     }//GEN-LAST:event_jbNuevoActionPerformed
 
     private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
@@ -478,7 +482,7 @@ public class JIFMateria extends javax.swing.JInternalFrame {
         jbEliminar.setEnabled(false);
         jbModificar.setEnabled(false);
         // informa en esa variable -modifica- con una letra "M" de que se debe realizar un UPDATE (MODIFICACION/SQL)
-        modifica="M";        
+        modifica="M";                
     }//GEN-LAST:event_jbModificarActionPerformed
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
@@ -517,7 +521,10 @@ public class JIFMateria extends javax.swing.JInternalFrame {
         //limpiarDatos(0);
         //editarObloquearIngresos(true,false,false,false,false);        
         //modifica="";
+        // Apaga el cartel bliqueador con la informacion del proximo IdMateria a crear
         jLProximoIdMAteria.setText("");        
+        //apagarCartelBlinqueador();
+        
     }//GEN-LAST:event_jbGuardarActionPerformed
 
     private void jbRecuperarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRecuperarActionPerformed
@@ -545,7 +552,7 @@ public class JIFMateria extends javax.swing.JInternalFrame {
                     jLEstado.setText("Baja");
                 }
                 recuperar = "";
-            }
+            }            
 //        }
     }//GEN-LAST:event_jbRecuperarActionPerformed
 
@@ -615,6 +622,56 @@ public class JIFMateria extends javax.swing.JInternalFrame {
             //jLEstado.setBackground(Color.white);
             jLEstado.setText("Baja");
         }                
+    }
+    
+    public void cartelBlinqueador(String cartel)
+    {
+        // PARA UN JFrame
+        JFrame frame = new JFrame();
+        JLabel label = new JLabel(cartel);
+        frame.add(label);
+        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);                
+        frame.setSize(150, 100);                
+        frame.setVisible(true);        
+        
+        /* PARA UN JinternalFrame
+        JInternalFrame internalFrame = new JInternalFrame();
+        JLabel label = new JLabel(cartel);        
+        internalFrame.add(label);
+        //internalFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);        
+        internalFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);        
+        //internalFrame.setClosable(true);        
+        //internalFrame.setLocation(100,100);
+        //internalFrame.setBounds(0, 0, 150, 100);
+        internalFrame.setSize(150, 100);                
+        internalFrame.setVisible(true);
+        */
+        
+        Timer timer = new Timer(500, new ActionListener() {
+            private boolean isForeground = true;
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (isForeground) {
+                    label.setForeground(Color.BLUE);
+                } else {
+                    label.setForeground(Color.BLACK);
+                }
+                isForeground = !isForeground;
+            }
+        });
+        timer.start();        
+    }
+    
+    public void apagarCartelBlinqueador()
+    {
+        JFrame frame = new JFrame();
+        JLabel label = new JLabel("");
+        frame.add(label);
+        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setSize(300, 200);
+        frame.setVisible(false);        
     }
     
     

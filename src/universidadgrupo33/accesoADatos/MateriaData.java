@@ -1,6 +1,9 @@
-// dia: 20/09/23 hs: 2:20
+// dia: 20/09/23 hs: 8:00
 package universidadgrupo33.accesoADatos;
 
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -10,7 +13,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 import universidadgrupo33.entidades.Materia;
 
 public class MateriaData {
@@ -199,6 +205,7 @@ public class MateriaData {
         }
         return materia;
       };
+      
       
      
 }
