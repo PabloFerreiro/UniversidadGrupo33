@@ -1,24 +1,37 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package universidadgrupo33.vistas;
-import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Pablo
- */
+package universidadgrupo33.vistas;
+
+import javax.swing.table.DefaultTableModel;
+import universidadgrupo33.accesoADatos.AlumnoData;
+import universidadgrupo33.accesoADatos.InscripcionData;
+import universidadgrupo33.accesoADatos.MateriaData;
+import universidadgrupo33.entidades.Alumno;
+import universidadgrupo33.entidades.Inscripcion;
+import universidadgrupo33.entidades.Materia;
+
+
 public class JIFNotas extends javax.swing.JInternalFrame {
-    private DefaultTableModel modelo = new DefaultTableModel(){
-    public boolean isCellEditable (int f, int c){
-    return false;
-    }
+
+    private DefaultTableModel modelo = new DefaultTableModel() {
+        public boolean isCellEditable(int f, int c) {
+            return false;
+        }
     };
+
+    AlumnoData alu = new AlumnoData();
+    MateriaData mat = new MateriaData();
+    InscripcionData ins = new InscripcionData();
+    Alumno alu2 = new Alumno();
+    Materia mat2 = new Materia();
+    Inscripcion ins2 = new Inscripcion();
+
+    int idAlumnoABuscar = 0;
+    int idMateriaABuscar = 0;
+
     public JIFNotas() {
         initComponents();
         armarCabecera();
+        cargarComboBoxALumnos();
         this.setTitle("UNIVERSIDAD ULP - Carga de Notas");
     }
 
@@ -44,7 +57,11 @@ public class JIFNotas extends javax.swing.JInternalFrame {
         jLabel2.setText("Seleccione un alumno:");
 
         jcbSeleccionAlumno.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jcbSeleccionAlumno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcbSeleccionAlumno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbSeleccionAlumnoActionPerformed(evt);
+            }
+        });
 
         jtResultadoSeleccionAlumno.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jtResultadoSeleccionAlumno.setModel(new javax.swing.table.DefaultTableModel(
@@ -112,8 +129,14 @@ public class JIFNotas extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
-    this.dispose();
+        this.dispose();
     }//GEN-LAST:event_jbSalirActionPerformed
+
+    private void jcbSeleccionAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbSeleccionAlumnoActionPerformed
+        alu2 = (Alumno) jcbSeleccionAlumno.getSelectedItem();
+        idAlumnoABuscar = alu2.getIdAlumno();
+
+    }//GEN-LAST:event_jcbSeleccionAlumnoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -122,16 +145,26 @@ public class JIFNotas extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbGuardar;
     private javax.swing.JButton jbSalir;
-    private javax.swing.JComboBox<String> jcbSeleccionAlumno;
+    private javax.swing.JComboBox<Alumno> jcbSeleccionAlumno;
     private javax.swing.JTable jtResultadoSeleccionAlumno;
     // End of variables declaration//GEN-END:variables
-private void armarCabecera(){
-    modelo.addColumn("Código de Materia");
-    modelo.addColumn("Nombre de materia");
-    modelo.addColumn("Nota");
-    jtResultadoSeleccionAlumno.setModel(modelo);
+private void armarCabecera() {
+        modelo.addColumn("Código de Materia");
+        modelo.addColumn("Nombre de materia");
+        modelo.addColumn("Nota");
+        jtResultadoSeleccionAlumno.setModel(modelo);
 
     }
 
+     private void cargarComboBoxALumnos()
+    {           
+        
+        //System.out.println("Entro a llenar el combobox");
+        // Vaciar el JComboBox
+        jcbSeleccionAlumno.removeAllItems();
+        for(Alumno alum:alu.listarAlumnos(1)){      
+            jcbSeleccionAlumno.addItem(alum); 
+        }        
+    }
 
 }

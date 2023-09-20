@@ -1,6 +1,8 @@
 // dia: 19/09/23 hs: 17:45
 package universidadgrupo33.vistas;
+
 import java.text.DecimalFormat;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import universidadgrupo33.accesoADatos.AlumnoData;
 import universidadgrupo33.accesoADatos.InscripcionData;
@@ -10,20 +12,23 @@ import universidadgrupo33.entidades.Inscripcion;
 import universidadgrupo33.entidades.Materia;
 
 public class JIFInscripciones extends javax.swing.JInternalFrame {
-    private DefaultTableModel modelo = new DefaultTableModel(){
-    public boolean isCellEditable (int f, int c){
-    return false;
-    }
+
+    private DefaultTableModel modelo = new DefaultTableModel() {
+        public boolean isCellEditable(int f, int c) {
+            return false;
+        }
     };
-    AlumnoData alu=new AlumnoData();
-    MateriaData mat=new MateriaData();
-    InscripcionData ins=new InscripcionData();
-    Alumno alu2=new Alumno();
-    Materia mat2=new Materia();
-    Inscripcion ins2=new Inscripcion();
+    AlumnoData alu = new AlumnoData();
+    MateriaData mat = new MateriaData();
+    InscripcionData ins = new InscripcionData();
+    Alumno alu2 = new Alumno();
+    Materia mat2 = new Materia();
+    Inscripcion ins2 = new Inscripcion();
+
     // se usara esta variablñe para ser referencia del idALumno a buscar    
-    int idAlumnoABuscar=0;
-    
+    int idAlumnoABuscar = 0;
+    int idMateriaABuscar = 0;
+
     public JIFInscripciones() {
         initComponents();
         armarCabecera();
@@ -189,38 +194,72 @@ public class JIFInscripciones extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbAnularInscripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAnularInscripcionActionPerformed
-        // TODO add your handling code here:
+
+        if (jtResultadoSeleccionAlumnos.getSelectedRow() != -1) {
+            //idMateriaABuscar = Integer.parseInt((String) modelo.getValueAt(jtResultadoSeleccionAlumnos.getSelectedRow(), 0));
+            idMateriaABuscar = (int) modelo.getValueAt(jtResultadoSeleccionAlumnos.getSelectedRow(), 0);
+
+            // Lo imprimimos en pantalla
+            System.out.println(idMateriaABuscar);
+            ins.borrarInscripcionMateriaAlumno(idAlumnoABuscar, idMateriaABuscar);
+
+        } else {
+            JOptionPane.showMessageDialog(this, "No existe materia para anular");
+        }
     }//GEN-LAST:event_jbAnularInscripcionActionPerformed
 
     private void jbInscribirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbInscribirActionPerformed
-        // TODO add your handling code here:
+        if (jtResultadoSeleccionAlumnos.getSelectedRow() != -1) {
+            //idMateriaABuscar = Integer.parseInt((String) modelo.getValueAt(jtResultadoSeleccionAlumnos.getSelectedRow(), 0));
+            idMateriaABuscar = (int) modelo.getValueAt(jtResultadoSeleccionAlumnos.getSelectedRow(), 0);
+            alu2.setIdAlumno(idAlumnoABuscar);
+            mat2.setIdMateria(idMateriaABuscar);
+
+            Inscripcion insc3 = new Inscripcion(alu2, mat2, 0);
+            // Lo imprimimos en pantalla
+            System.out.println(idMateriaABuscar);
+            ins.guardarInscripcion(insc3);
+
+        } else {
+            JOptionPane.showMessageDialog(this, "No existe materia para anular");
+        }
     }//GEN-LAST:event_jbInscribirActionPerformed
 
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
-    this.dispose();
+        this.dispose();
     }//GEN-LAST:event_jbSalirActionPerformed
 
     private void jrbjrbMateriasNoInscriptasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbjrbMateriasNoInscriptasActionPerformed
-        modelo.setRowCount(0);        
-        for(Materia mater:ins.obtenerMateriasNoCursadas(idAlumnoABuscar)){      
-           modelo.addRow(new Object []{mater.getIdMateria(),
-                   mater.getNombre(),
-                   mater.getAño()});            
-        }        
+
+        botonMateriasNoInscriptas();
+            
+
+    
     }//GEN-LAST:event_jrbjrbMateriasNoInscriptasActionPerformed
 
     private void jrbMateriasInscriptasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbMateriasInscriptasActionPerformed
-        modelo.setRowCount(0);        
-        for(Materia mater:ins.obtenerMateriasCursadas(idAlumnoABuscar)){      
-           modelo.addRow(new Object []{mater.getIdMateria(),
-                   mater.getNombre(),
-                   mater.getAño()});            
-        }        
+        
+        botonMateriasInscriptas();
+              
     }//GEN-LAST:event_jrbMateriasInscriptasActionPerformed
 
     private void jcbSeleccionAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbSeleccionAlumnoActionPerformed
         alu2  = (Alumno) jcbSeleccionAlumno.getSelectedItem();                
         idAlumnoABuscar=alu2.getIdAlumno();
+        
+        if (jrbMateriasInscriptas.isSelected()){
+            modelo.setRowCount(0);
+            botonMateriasInscriptas();
+        
+        }
+        
+        if (jrbjrbMateriasNoInscriptas.isSelected()){
+            modelo.setRowCount(0);
+            botonMateriasNoInscriptas();
+        
+        }
+        
+        
         //System.out.println("x idAlumno a usar par buscar en Materias: "+idAlumnoABuscar);         
     }//GEN-LAST:event_jcbSeleccionAlumnoActionPerformed
 
@@ -270,7 +309,26 @@ public class JIFInscripciones extends javax.swing.JInternalFrame {
         }        
     }        
     
+    public void botonMateriasNoInscriptas() {
+        jbInscribir.setEnabled(true);
+        jbAnularInscripcion.setEnabled(false);
+        modelo.setRowCount(0);
+        for (Materia mater : ins.obtenerMateriasNoCursadas(idAlumnoABuscar)) {
+            modelo.addRow(new Object[]{mater.getIdMateria(),
+                mater.getNombre(),
+                mater.getAño()});
+        }
+    }
     
-    
+    public void botonMateriasInscriptas() {
+        jbInscribir.setEnabled(false);
+        jbAnularInscripcion.setEnabled(true);
+        modelo.setRowCount(0);        
+        for(Materia mater:ins.obtenerMateriasCursadas(idAlumnoABuscar)){      
+           modelo.addRow(new Object []{mater.getIdMateria(),
+                   mater.getNombre(),
+                   mater.getAño()});            
+        }  
+    }
     
 }
