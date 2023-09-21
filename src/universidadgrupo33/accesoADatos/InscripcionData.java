@@ -133,87 +133,141 @@ public class InscripcionData {
     }
 
         //método obtener Inscripciones por alumno
-    public List<String> obtenerInscripcionesPorAlumno(int idAlumno) {
-        // Se piden los datos no solo de la tabla inscripcion, sino tambien las de alumno y materia
-        // Se piden todas las inscripciones, incluso a las que incluyan alumnos y/o materias dadas de baja (baja lógica)
-        String sql = "SELECT A.idInscripto, A.idAlumno, B.apellido, B.nombre, B.estado, A.idMateria, C.nombre,"
-                + "C.anio, A.nota  "
-                + "FROM inscripcion A, alumno B, materia C "
-                + "WHERE A.idAlumno=? AND A.idAlumno=B.idAlumno AND A.idMateria=C.idMateria "
-                + "ORDER BY A.idInscripto";
-
-        //Se define un arraylist
-        ArrayList<String> resumen = new ArrayList<>();
-
+//    public List<String> obtenerInscripcionesPorAlumno(int idAlumno) {
+//        // Se piden los datos no solo de la tabla inscripcion, sino tambien las de alumno y materia
+//        // Se piden todas las inscripciones, incluso a las que incluyan alumnos y/o materias dadas de baja (baja lógica)
+//        String sql = "SELECT A.idInscripto, A.idAlumno, B.apellido, B.nombre, B.estado, A.idMateria, C.nombre,"
+//                + "C.anio, A.nota  "
+//                + "FROM inscripcion A, alumno B, materia C "
+//                + "WHERE A.idAlumno=? AND A.idAlumno=B.idAlumno AND A.idMateria=C.idMateria "
+//                + "ORDER BY A.idInscripto";
+//
+//        //Se define un arraylist
+//        ArrayList<String> resumen = new ArrayList<>();
+//
+//        try {
+//            PreparedStatement ps = con.prepareStatement(sql);
+//            ps.setInt(1, idAlumno);
+//            ResultSet rs = ps.executeQuery();
+//
+//            //hacemos un contador can
+//            int can = 0;
+//
+//            //hacemos un string informe para hacer las concatenaciones
+//            String informe = "";
+//
+//            // linea de los titulos de columnas a mostrar
+//            informe = "idInscripto ";
+//            informe = informe + "idAlumno ";
+//            informe = informe + "apellido ";
+//            informe = informe + "nombre ";
+//            informe = informe + "idMateria ";
+//            informe = informe + "nombre ";
+//            informe = informe + "anio ";
+//            informe = informe + "nota";
+//
+//            //guardamos en el array
+//            resumen.add(informe);
+//
+//            //bucle while recorre la tabla de resultados
+//            while (rs.next()) {
+//
+//                //vamos incrementando el contador
+//                can++;
+//
+//                //hacemos los system out para control
+//                System.out.println("Registro: " + can);
+//                System.out.println(rs.getInt("A.idInscripto"));
+//                System.out.println(rs.getInt("A.idAlumno"));
+//                System.out.println(rs.getString("B.apellido"));
+//                System.out.println(rs.getString("B.nombre"));
+//                System.out.println(rs.getInt("A.idMateria"));
+//                System.out.println(rs.getString("C.nombre"));
+//                System.out.println(rs.getInt("C.anio"));
+//                System.out.println(String.valueOf(rs.getDouble("A.nota")));
+//
+//                //armado de la linea de datos obtenidos
+//                informe = "Inscripcion Nº: ";
+//                informe = informe + rs.getInt("A.idInscripto") + " ";
+//                informe = informe + rs.getInt("A.idAlumno") + ":";
+//                informe = informe + rs.getString("B.apellido") + " ";
+//
+//                //control de estado de alumno
+//                if (rs.getBoolean("B.estado") == true) {
+//                    informe = informe + rs.getString("B.nombre") + "(    ) ";
+//                } else {
+//                    informe = informe + rs.getString("B.nombre") + "(Baja) ";
+//                }
+//                informe = informe + rs.getInt("A.idMateria") + ":";
+//                informe = informe + rs.getString("C.nombre") + " ";
+//                informe = informe + rs.getInt("C.anio") + " ";
+//                informe = informe + String.valueOf(rs.getDouble("A.nota"));
+//
+//                resumen.add(informe);
+//
+//            }
+//            ps.close();
+//
+//        } catch (SQLException ex) {
+//            JOptionPane.showMessageDialog(null, "Error al acceder a las Bases de Datos. No se pudo realizr el informe de Inscripciones: " + ex);
+//        }
+//        //return inscripcion;         
+//        return resumen;
+//    }
+    
+    public List<Inscripcion> obtenerInscripcionesPorAlumno(int idAlumno) {
+        System.out.println("Antes de instanciar el arraylist");
+     ArrayList<Inscripcion> inscripcion = new ArrayList<>();
+        String sql = "SELECT idInscripto, nota, inscripcion.idAlumno, inscripcion.idMateria, materia.nombre, materia.anio"                
+                + "FROM inscripcion, materia "
+                + "WHERE inscripcion.idAlumno = ? AND inscripcion.idMateria = materia.idMateria";
         try {
+            System.out.println("Antes del PreparedStatement");
             PreparedStatement ps = con.prepareStatement(sql);
+            //seteamos el id de materia que viene por parametro
             ps.setInt(1, idAlumno);
-            ResultSet rs = ps.executeQuery();
-
-            //hacemos un contador can
-            int can = 0;
-
-            //hacemos un string informe para hacer las concatenaciones
-            String informe = "";
-
-            // linea de los titulos de columnas a mostrar
-            informe = "idInscripto ";
-            informe = informe + "idAlumno ";
-            informe = informe + "apellido ";
-            informe = informe + "nombre ";
-            informe = informe + "idMateria ";
-            informe = informe + "nombre ";
-            informe = informe + "anio ";
-            informe = informe + "nota";
-
-            //guardamos en el array
-            resumen.add(informe);
-
-            //bucle while recorre la tabla de resultados
-            while (rs.next()) {
-
-                //vamos incrementando el contador
-                can++;
-
-                //hacemos los system out para control
-                System.out.println("Registro: " + can);
-                System.out.println(rs.getInt("A.idInscripto"));
-                System.out.println(rs.getInt("A.idAlumno"));
-                System.out.println(rs.getString("B.apellido"));
-                System.out.println(rs.getString("B.nombre"));
-                System.out.println(rs.getInt("A.idMateria"));
-                System.out.println(rs.getString("C.nombre"));
-                System.out.println(rs.getInt("C.anio"));
-                System.out.println(String.valueOf(rs.getDouble("A.nota")));
-
-                //armado de la linea de datos obtenidos
-                informe = "Inscripcion Nº: ";
-                informe = informe + rs.getInt("A.idInscripto") + " ";
-                informe = informe + rs.getInt("A.idAlumno") + ":";
-                informe = informe + rs.getString("B.apellido") + " ";
-
-                //control de estado de alumno
-                if (rs.getBoolean("B.estado") == true) {
-                    informe = informe + rs.getString("B.nombre") + "(    ) ";
-                } else {
-                    informe = informe + rs.getString("B.nombre") + "(Baja) ";
-                }
-                informe = informe + rs.getInt("A.idMateria") + ":";
-                informe = informe + rs.getString("C.nombre") + " ";
-                informe = informe + rs.getInt("C.anio") + " ";
-                informe = informe + String.valueOf(rs.getDouble("A.nota"));
-
-                resumen.add(informe);
-
+            System.out.println("Antes del Resulset");
+            ResultSet rs = ps.executeQuery(); 
+            System.out.println("Despues del Resulset");
+            
+            System.out.println("Entrando al while" + rs.next());
+            while (rs.next())
+            {
+                System.out.println("Paso1");
+                Inscripcion inscrip=new Inscripcion();
+                inscrip.setIdInscripcion(rs.getInt("idInscripto"));
+                inscrip.setNota(rs.getDouble("nota"));
+                System.out.println("Paso2");
+                Alumno alum = new Alumno();
+                System.out.println("Paso3");
+                Materia mater = new Materia();
+                System.out.println("Paso4");
+                
+                alum.setIdAlumno(rs.getInt("inscripcion.idAlumno"));
+                System.out.println("Paso5");
+                mater.setIdMateria(rs.getInt("inscripcion.idMateria"));
+                System.out.println("Paso6");
+                mater.setNombre(rs.getString("materia.nombre"));
+                System.out.println("Paso7");
+                mater.setAño(rs.getInt("materia.anio"));
+                System.out.println("Paso8");
+                
+                inscrip.setAlumno(alum);
+                System.out.println("Paso9");
+                inscrip.setMateria(mater);
+                System.out.println("Paso10");
+              
+                
+                inscripcion.add(inscrip);  
+                System.out.println("Paso11");
             }
             ps.close();
-
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a las Bases de Datos. No se pudo realizr el informe de Inscripciones: " + ex);
+            JOptionPane.showMessageDialog(null, "Error al acceder a las Bases de Datos de Inscripcion: " + ex);
         }
         //return inscripcion;         
-        return resumen;
-    }
+        return inscripcion;
+    };
           
         //método obtener materias cursadas
     public List<Materia> obtenerMateriasCursadas(int id) {

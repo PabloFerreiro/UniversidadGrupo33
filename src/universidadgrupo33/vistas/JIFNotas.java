@@ -150,6 +150,7 @@ public class JIFNotas extends javax.swing.JInternalFrame {
         // verifica que no elija la primer linea del combobox que es solo titulo
         if (alu2.getIdAlumno() != 0) {
             idAlumnoABuscar = alu2.getIdAlumno();    
+            System.out.println("Paso0 " + idAlumnoABuscar);
             MateriasInscriptas();
         }else{
             modelo.setRowCount(0);        
@@ -201,11 +202,16 @@ private void armarCabecera() {
      public void MateriasInscriptas() {        
         jbGuardar.setEnabled(true);        
         modelo.setRowCount(0);        
-        String hayMaterias="N";        
-        for(Materia mater:ins.obtenerMateriasCursadas(idAlumnoABuscar)){      
-           modelo.addRow(new Object []{mater.getIdMateria(),
-                   mater.getNombre(),
-                   mater.getAño()});                               
+        String hayMaterias="N"; 
+        System.out.println("Entramos a MateriasInscriptas antes del for");
+        for(Inscripcion inscripcion:ins.obtenerInscripcionesPorAlumno(idAlumnoABuscar)){      
+           modelo.addRow(new Object []{
+                   ins2.getMateria().getIdMateria(),
+                   ins2.getMateria().getNombre(),
+                   ins2.getNota(),
+           
+           }); 
+           System.out.println("Traspasamos el for");
            hayMaterias="S";
         }
         if (hayMaterias=="N")
