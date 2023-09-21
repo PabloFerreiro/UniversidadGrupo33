@@ -1,6 +1,10 @@
 
 package universidadgrupo33.vistas;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import universidadgrupo33.accesoADatos.AlumnoData;
 import universidadgrupo33.accesoADatos.InscripcionData;
@@ -14,7 +18,11 @@ public class JIFNotas extends javax.swing.JInternalFrame {
 
     private DefaultTableModel modelo = new DefaultTableModel() {
         public boolean isCellEditable(int f, int c) {
-            return false;
+            if (c!=2)
+            { 
+               return false;
+            }
+            return true;
         }
     };
 
@@ -79,6 +87,11 @@ public class JIFNotas extends javax.swing.JInternalFrame {
 
         jbGuardar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jbGuardar.setText("Guardar");
+        jbGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbGuardarActionPerformed(evt);
+            }
+        });
 
         jbSalir.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jbSalir.setText("Salir");
@@ -133,10 +146,22 @@ public class JIFNotas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbSalirActionPerformed
 
     private void jcbSeleccionAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbSeleccionAlumnoActionPerformed
-        alu2 = (Alumno) jcbSeleccionAlumno.getSelectedItem();
-        idAlumnoABuscar = alu2.getIdAlumno();
+        alu2  = (Alumno) jcbSeleccionAlumno.getSelectedItem();                
+        // verifica que no elija la primer linea del combobox que es solo titulo
+        if (alu2.getIdAlumno() != 0) {
+            idAlumnoABuscar = alu2.getIdAlumno();    
+            MateriasInscriptas();
+        }else{
+            modelo.setRowCount(0);        
+            idAlumnoABuscar =0;
+            jbGuardar.setEnabled(false);            
+        }
 
     }//GEN-LAST:event_jcbSeleccionAlumnoActionPerformed
+
+    private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
+        System.out.println("idAlumno: "+idAlumnoABuscar);
+    }//GEN-LAST:event_jbGuardarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -158,13 +183,35 @@ private void armarCabecera() {
 
      private void cargarComboBoxALumnos()
     {           
-        
         //System.out.println("Entro a llenar el combobox");
         // Vaciar el JComboBox
         jcbSeleccionAlumno.removeAllItems();
+        // agrega una linea que diga -ELIJA UN ALUMNO DE LA LISTA-
+        String fechaFalsa="21/09/2023";
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate fechaFalsaAPasar = LocalDate.parse(fechaFalsa, formato);
+        Alumno aluTitulo = new Alumno(0,0,"-ELIJA UN ALUMNO DE LA LISTA-","",fechaFalsaAPasar,true);
+        jcbSeleccionAlumno.addItem(aluTitulo); 
+        // ahora agrega en el combobox los datos de alumnos recuperados desde sql        
         for(Alumno alum:alu.listarAlumnos(1)){      
             jcbSeleccionAlumno.addItem(alum); 
         }        
     }
+     
+     public void MateriasInscriptas() {        
+        jbGuardar.setEnabled(true);        
+        modelo.setRowCount(0);        
+        String hayMaterias="N";        
+        for(Materia mater:ins.obtenerMateriasCursadas(idAlumnoABuscar)){      
+           modelo.addRow(new Object []{mater.getIdMateria(),
+                   mater.getNombre(),
+                   mater.getAño()});                               
+           hayMaterias="S";
+        }
+        if (hayMaterias=="N")
+        {
+            jbGuardar.setEnabled(false);        
+        }
+    }  
 
 }

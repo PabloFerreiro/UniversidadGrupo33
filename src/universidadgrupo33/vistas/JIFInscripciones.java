@@ -2,6 +2,8 @@
 package universidadgrupo33.vistas;
 
 import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import universidadgrupo33.accesoADatos.AlumnoData;
@@ -194,34 +196,37 @@ public class JIFInscripciones extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbAnularInscripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAnularInscripcionActionPerformed
-
-        if (jtResultadoSeleccionAlumnos.getSelectedRow() != -1) {
-            //idMateriaABuscar = Integer.parseInt((String) modelo.getValueAt(jtResultadoSeleccionAlumnos.getSelectedRow(), 0));
-            idMateriaABuscar = (int) modelo.getValueAt(jtResultadoSeleccionAlumnos.getSelectedRow(), 0);
-
-            // Lo imprimimos en pantalla
-            System.out.println(idMateriaABuscar);
-            ins.borrarInscripcionMateriaAlumno(idAlumnoABuscar, idMateriaABuscar);
-
-        } else {
-            JOptionPane.showMessageDialog(this, "No existe materia para anular");
+        if (idAlumnoABuscar != 0) {
+            if (jtResultadoSeleccionAlumnos.getSelectedRow() != -1) {
+                //idMateriaABuscar = Integer.parseInt((String) modelo.getValueAt(jtResultadoSeleccionAlumnos.getSelectedRow(), 0));
+                idMateriaABuscar = (int) modelo.getValueAt(jtResultadoSeleccionAlumnos.getSelectedRow(), 0);
+                // Lo imprimimos en pantalla
+                //System.out.println(idMateriaABuscar);
+                ins.borrarInscripcionMateriaAlumno(idAlumnoABuscar, idMateriaABuscar);
+                //actualiza la visual de la tabla
+                botonMateriasInscriptas();
+            } else {
+                JOptionPane.showMessageDialog(this, "No existe materia para anular");
+            }
         }
     }//GEN-LAST:event_jbAnularInscripcionActionPerformed
 
     private void jbInscribirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbInscribirActionPerformed
-        if (jtResultadoSeleccionAlumnos.getSelectedRow() != -1) {
-            //idMateriaABuscar = Integer.parseInt((String) modelo.getValueAt(jtResultadoSeleccionAlumnos.getSelectedRow(), 0));
-            idMateriaABuscar = (int) modelo.getValueAt(jtResultadoSeleccionAlumnos.getSelectedRow(), 0);
-            alu2.setIdAlumno(idAlumnoABuscar);
-            mat2.setIdMateria(idMateriaABuscar);
-
-            Inscripcion insc3 = new Inscripcion(alu2, mat2, 0);
-            // Lo imprimimos en pantalla
-            System.out.println(idMateriaABuscar);
-            ins.guardarInscripcion(insc3);
-
-        } else {
-            JOptionPane.showMessageDialog(this, "No existe materia para anular");
+        if (idAlumnoABuscar != 0) {
+            if (jtResultadoSeleccionAlumnos.getSelectedRow() != -1) {
+                //idMateriaABuscar = Integer.parseInt((String) modelo.getValueAt(jtResultadoSeleccionAlumnos.getSelectedRow(), 0));
+                idMateriaABuscar = (int) modelo.getValueAt(jtResultadoSeleccionAlumnos.getSelectedRow(), 0);
+                alu2.setIdAlumno(idAlumnoABuscar);
+                mat2.setIdMateria(idMateriaABuscar);
+                Inscripcion insc3 = new Inscripcion(alu2, mat2, 0);
+                // Lo imprimimos en pantalla
+                //System.out.println(idMateriaABuscar);
+                ins.guardarInscripcion(insc3);
+                //actualiza la visual de la tabla
+                botonMateriasNoInscriptas();
+            } else {
+                JOptionPane.showMessageDialog(this, "No existe materia para anular");
+            }
         }
     }//GEN-LAST:event_jbInscribirActionPerformed
 
@@ -230,33 +235,39 @@ public class JIFInscripciones extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jbSalirActionPerformed
 
     private void jrbjrbMateriasNoInscriptasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbjrbMateriasNoInscriptasActionPerformed
-
-        botonMateriasNoInscriptas();
-            
-
-    
+        if (idAlumnoABuscar!=0)
+        {
+           botonMateriasNoInscriptas();
+        }
     }//GEN-LAST:event_jrbjrbMateriasNoInscriptasActionPerformed
 
     private void jrbMateriasInscriptasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbMateriasInscriptasActionPerformed
-        
-        botonMateriasInscriptas();
-              
+        if (idAlumnoABuscar!=0)
+        {        
+           botonMateriasInscriptas();
+        }     
     }//GEN-LAST:event_jrbMateriasInscriptasActionPerformed
 
     private void jcbSeleccionAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbSeleccionAlumnoActionPerformed
         alu2  = (Alumno) jcbSeleccionAlumno.getSelectedItem();                
-        idAlumnoABuscar=alu2.getIdAlumno();
-        
-        if (jrbMateriasInscriptas.isSelected()){
-            modelo.setRowCount(0);
-            botonMateriasInscriptas();
-        
-        }
-        
-        if (jrbjrbMateriasNoInscriptas.isSelected()){
-            modelo.setRowCount(0);
-            botonMateriasNoInscriptas();
-        
+        // verifica que no elija la primer linea del combobox que es solo titulo
+        if (alu2.getIdAlumno() != 0) {
+            idAlumnoABuscar = alu2.getIdAlumno();
+
+            if (jrbMateriasInscriptas.isSelected()) {
+                modelo.setRowCount(0);
+                botonMateriasInscriptas();
+            }
+
+            if (jrbjrbMateriasNoInscriptas.isSelected()) {
+                modelo.setRowCount(0);
+                botonMateriasNoInscriptas();
+            }            
+        }else{
+            modelo.setRowCount(0);        
+            idAlumnoABuscar =0;
+            jbInscribir.setEnabled(false);
+            jbAnularInscripcion.setEnabled(false);
         }
         
         
@@ -299,11 +310,17 @@ public class JIFInscripciones extends javax.swing.JInternalFrame {
     }
     
     private void cargarComboBoxALumnos()
-    {           
-        
+    {                   
         //System.out.println("Entro a llenar el combobox");
         // Vaciar el JComboBox
         jcbSeleccionAlumno.removeAllItems();
+        // agrega una linea que diga -ELIJA UN ALUMNO DE LA LISTA-
+        String fechaFalsa="21/09/2023";
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate fechaFalsaAPasar = LocalDate.parse(fechaFalsa, formato);
+        Alumno aluTitulo = new Alumno(0,0,"-ELIJA UN ALUMNO DE LA LISTA-","",fechaFalsaAPasar,true);
+        jcbSeleccionAlumno.addItem(aluTitulo); 
+        // ahora agrega en el combobox los datos de alumnos recuperados desde sql        
         for(Alumno alum:alu.listarAlumnos(1)){      
             jcbSeleccionAlumno.addItem(alum); 
         }        
@@ -311,24 +328,39 @@ public class JIFInscripciones extends javax.swing.JInternalFrame {
     
     public void botonMateriasNoInscriptas() {
         jbInscribir.setEnabled(true);
-        jbAnularInscripcion.setEnabled(false);
+        jbAnularInscripcion.setEnabled(false);        
+        String hayMaterias="N";
         modelo.setRowCount(0);
         for (Materia mater : ins.obtenerMateriasNoCursadas(idAlumnoABuscar)) {
             modelo.addRow(new Object[]{mater.getIdMateria(),
                 mater.getNombre(),
                 mater.getAño()});
+            hayMaterias="S";
+        }
+        if (hayMaterias=="N")
+        {  
+            jbInscribir.setEnabled(false);
+            jbAnularInscripcion.setEnabled(false);
         }
     }
     
     public void botonMateriasInscriptas() {
         jbInscribir.setEnabled(false);
-        jbAnularInscripcion.setEnabled(true);
+        jbAnularInscripcion.setEnabled(true);        
+        String hayMaterias="N";
         modelo.setRowCount(0);        
         for(Materia mater:ins.obtenerMateriasCursadas(idAlumnoABuscar)){      
            modelo.addRow(new Object []{mater.getIdMateria(),
                    mater.getNombre(),
                    mater.getAño()});            
-        }  
-    }
+           hayMaterias="S";
+        }
+        if (hayMaterias=="N")
+        {  
+            jbInscribir.setEnabled(false);
+            jbAnularInscripcion.setEnabled(false);
+        }
+    }    
+    
     
 }

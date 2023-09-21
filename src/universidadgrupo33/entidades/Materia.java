@@ -1,5 +1,7 @@
 package universidadgrupo33.entidades;
 
+import java.text.DecimalFormat;
+
 public class Materia 
 {
 
@@ -69,7 +71,8 @@ public class Materia
 
     @Override
     public String toString() {
-        return "Materia{" + "idMateria=" + idMateria + ", nombre=" + nombre + ", a\u00f1o=" + año + ", estado=" + estado + '}';
+        DecimalFormat df = new DecimalFormat("00");        
+        return "id: " +df.format(idMateria)+ ", "+ nombre + ", Año: " + año + ", " + estado;
     }
     
     

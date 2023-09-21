@@ -153,7 +153,7 @@ public class MateriaData {
      //Método listarMaterias
       public List<Materia> listarMaterias() {
           
-        String sql = "SELECT idMateria, nombre, anio FROM materia WHERE estado = 1";
+        String sql = "SELECT idMateria, nombre, anio, estado FROM materia WHERE estado = 1";
         ArrayList<Materia> materias = new ArrayList<>();
         try {
             PreparedStatement ps=con.prepareStatement(sql);
@@ -164,18 +164,13 @@ public class MateriaData {
                 materia.setIdMateria(rs.getInt("idMateria"));
                 materia.setNombre(rs.getString("nombre"));
                 materia.setAño(rs.getInt("anio"));
-                materia.setEstado(true);
-                
-                materias.add(materia);
-                
+                materia.setEstado(rs.getBoolean("estado"));                
+                materias.add(materia);                
             }
             ps.close();
-
         } catch (SQLException ex) {
-
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Alumno. No se pudo buscar el alumno");
         }
-
         return materias;         
       };
       
