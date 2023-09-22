@@ -269,7 +269,7 @@ public class InscripcionData {
            System.out.println("Nota: "+inscrip2.getNota());                      
         }
         */
-        System.out.println("IMPRIMIENDO LISTA DE INSCRIPCIONES: "+inscripcion);
+       // System.out.println("IMPRIMIENDO LISTA DE INSCRIPCIONES: "+inscripcion);
         return inscripcion;
     };
           

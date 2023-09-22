@@ -38,14 +38,15 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }
     public MenuPrincipal() {
         initComponents();
-        setLocationRelativeTo(null);
+        editarObloquearMenues(false ,false , false, false, false, true);
+        
         this.setTitle("UNIVERSIDAD ULP");        
         // las siguientes 3 lineas permiten visualiar el logo de la empresa del sistema
         Image iconoPropio = Toolkit.getDefaultToolkit().getImage(getClass().getResource("Grupo332023.png"));
         setIconImage(iconoPropio);
         setVisible(true);
         //jmSalir.setFocusTraversalKeysEnabled(true);
-        editarObloquearMenues(false,false,false,false,false,true);
+        //editarObloquearMenues(false,false,false,false,false,true);
         
         
     }
@@ -70,7 +71,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jmSalir = new javax.swing.JMenu();
         jmIniciarSesion = new javax.swing.JMenu();
-        jMIIngresar = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(getIconImage());
@@ -83,7 +83,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         );
         jdpEscritorioLayout.setVerticalGroup(
             jdpEscritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 686, Short.MAX_VALUE)
+            .addGap(0, 692, Short.MAX_VALUE)
         );
 
         jmAlumno.setText("Alumno");
@@ -160,20 +160,13 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
         jMenuBar1.add(jmSalir);
 
-        jmIniciarSesion.setBackground(new java.awt.Color(255, 255, 102));
-        jmIniciarSesion.setForeground(new java.awt.Color(0, 51, 204));
-        jmIniciarSesion.setText(" (Iniciar-Sesion)");
-        jmIniciarSesion.setFont(new java.awt.Font("Segoe UI Black", 1, 22)); // NOI18N
-
-        jMIIngresar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jMIIngresar.setText("Ingresar");
-        jMIIngresar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMIIngresarActionPerformed(evt);
+        jmIniciarSesion.setText("Iniciar Sesión");
+        jmIniciarSesion.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jmIniciarSesion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jmIniciarSesionMouseClicked(evt);
             }
         });
-        jmIniciarSesion.add(jMIIngresar);
-
         jMenuBar1.add(jmIniciarSesion);
 
         setJMenuBar(jMenuBar1);
@@ -274,34 +267,22 @@ public class MenuPrincipal extends javax.swing.JFrame {
     // cuando uso esta orden se ejecuta con un solo click del raton, todo bien asi....
     //System.exit(0);
     }//GEN-LAST:event_jmSalirMouseClicked
-    
-    private void jMIIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIIngresarActionPerformed
-        /*
+
+    private void jmIniciarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmIniciarSesionMouseClicked
         jdpEscritorio.removeAll();
-        jdpEscritorio.repaint();        
-        UsuarioPassw usuPas = new UsuarioPassw();        
-        usuPas.setVisible(true);        
-        jdpEscritorio.add(usuPas);
-        jdpEscritorio.moveToFront(usuPas);                
+        jdpEscritorio.repaint();
+        JIFLogin jiflogin = new JIFLogin();
+        jiflogin.setVisible(true);
+        jdpEscritorio.add(jiflogin);
+        jdpEscritorio.moveToFront(jiflogin);
+
         // Lineas para centrar el jInternalFrame dentro del desktopPane
         Dimension desktopSize = jdpEscritorio.getSize();
-        Dimension jInternalFrameSize = usuPas.getSize();
-        usuPas.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+        Dimension jInternalFrameSize = jiflogin.getSize();
+        jiflogin.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
         (desktopSize.height - jInternalFrameSize.height) / 2);
-        // activa los menues a utilizar, salvo a de inciarSesion que debera mantenerse asi hasta el final
-        editarObloquearMenues(true,true,true,true,true,false);                
-        // con esta linea cambia el nombre de la opcion -jmIniciarSesion- para que no sea visto hasta terminar el 
-        // uso del sistema, porque solo se usa una sola vez al ingresar al sistema...
-        jmIniciarSesion.setText("(Ingresando y Validando Ingreso al Sistema)");       
-        //jmIniciarSesion.setText("(Trabajando-en-el-Sistema)");       
-        // rearma la visual del menu principal -jdpEscrotorio-
-        //jdpEscritorio.repaint();         
-        */
-        // activa los menues a utilizar, salvo a de inciarSesion que debera mantenerse asi hasta el final
-        editarObloquearMenues(true,true,true,true,true,false);     
-                
-    }//GEN-LAST:event_jMIIngresarActionPerformed
-
+    }//GEN-LAST:event_jmIniciarSesionMouseClicked
+    
     /*
         jdpEscritorio.removeAll();
         jdpEscritorio.repaint();
@@ -354,7 +335,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem jMIIngresar;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;

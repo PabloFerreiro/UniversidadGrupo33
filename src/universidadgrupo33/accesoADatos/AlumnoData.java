@@ -106,13 +106,11 @@ public class AlumnoData {
     //método Recuperar un alumno eliminado logicamente
     public int recuperarAlumno(int id) {
         String sql = "UPDATE alumno SET estado = 1 WHERE idAlumno=?";        
-        //System.out.println("id=" + id);
         int exito=0;
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             exito = ps.executeUpdate();
-            //System.out.println("variable exito=" + exito);
             if (exito == 1) {
                 JOptionPane.showMessageDialog(null, "Alumno Recuperado");
             } else {
@@ -163,7 +161,6 @@ public class AlumnoData {
         try {
             PreparedStatement ps=con.prepareStatement(sql);
             ps.setInt(1, dni);
-            //ps.setInt(2, bajaActivo);
             ResultSet rs=ps.executeQuery();
             if (rs.next()) {
                 alumno=new Alumno();

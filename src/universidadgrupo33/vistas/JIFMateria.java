@@ -216,7 +216,7 @@ public class JIFMateria extends javax.swing.JInternalFrame {
         });
 
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel6.setText("Año;");
+        jLabel6.setText("Año:");
 
         jtfAño.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jtfAño.addActionListener(new java.awt.event.ActionListener() {

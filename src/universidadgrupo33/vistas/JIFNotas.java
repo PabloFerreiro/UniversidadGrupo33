@@ -150,7 +150,7 @@ public class JIFNotas extends javax.swing.JInternalFrame {
         // verifica que no elija la primer linea del combobox que es solo titulo
         if (alu2.getIdAlumno() != 0) {
             idAlumnoABuscar = alu2.getIdAlumno();    
-            System.out.println("Paso0 " + idAlumnoABuscar);
+//            System.out.println("Paso0 " + idAlumnoABuscar);
             cargarMateriasInscriptas();
         }else{
             modelo.setRowCount(0);        
@@ -161,17 +161,17 @@ public class JIFNotas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jcbSeleccionAlumnoActionPerformed
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
-        System.out.println("idAlumno: "+idAlumnoABuscar);
+        //System.out.println("idAlumno: "+idAlumnoABuscar);
         int linea=jtResultadoSeleccionAlumno.getSelectedRow();
         int colum=jtResultadoSeleccionAlumno.getSelectedColumn();        
         idMateriaABuscar=(Integer) jtResultadoSeleccionAlumno.getValueAt(linea, 0);        
-        System.out.println("lINEA posicion en la tabla: "+linea);
-        System.out.println("COLUMNA posicion en la tabla: "+colum);
-        System.out.println("idAlumnoABuscar: "+idAlumnoABuscar);
-        System.out.println("idMateriaABuscar: "+idMateriaABuscar);        
+//        System.out.println("lINEA posicion en la tabla: "+linea);
+//        System.out.println("COLUMNA posicion en la tabla: "+colum);
+//        System.out.println("idAlumnoABuscar: "+idAlumnoABuscar);
+//        System.out.println("idMateriaABuscar: "+idMateriaABuscar);        
         //double laNota=(Double) jtResultadoSeleccionAlumno.getValueAt(linea, 2);        
         double laNota = Double.parseDouble(String.valueOf(jtResultadoSeleccionAlumno.getValueAt(linea, 2)));
-        System.out.println("nota: "+laNota);        
+//        System.out.println("nota: "+laNota);        
         ins.actualizarNota(idAlumnoABuscar, idMateriaABuscar, laNota);
     }//GEN-LAST:event_jbGuardarActionPerformed
 
