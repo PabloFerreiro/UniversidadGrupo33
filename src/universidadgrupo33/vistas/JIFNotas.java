@@ -1,4 +1,4 @@
-
+// dia: 22/09/23 hs: 4:00am
 package universidadgrupo33.vistas;
 
 import java.time.LocalDate;
@@ -151,7 +151,7 @@ public class JIFNotas extends javax.swing.JInternalFrame {
         if (alu2.getIdAlumno() != 0) {
             idAlumnoABuscar = alu2.getIdAlumno();    
             System.out.println("Paso0 " + idAlumnoABuscar);
-            MateriasInscriptas();
+            cargarMateriasInscriptas();
         }else{
             modelo.setRowCount(0);        
             idAlumnoABuscar =0;
@@ -162,6 +162,17 @@ public class JIFNotas extends javax.swing.JInternalFrame {
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
         System.out.println("idAlumno: "+idAlumnoABuscar);
+        int linea=jtResultadoSeleccionAlumno.getSelectedRow();
+        int colum=jtResultadoSeleccionAlumno.getSelectedColumn();        
+        idMateriaABuscar=(Integer) jtResultadoSeleccionAlumno.getValueAt(linea, 0);        
+        System.out.println("lINEA posicion en la tabla: "+linea);
+        System.out.println("COLUMNA posicion en la tabla: "+colum);
+        System.out.println("idAlumnoABuscar: "+idAlumnoABuscar);
+        System.out.println("idMateriaABuscar: "+idMateriaABuscar);        
+        //double laNota=(Double) jtResultadoSeleccionAlumno.getValueAt(linea, 2);        
+        double laNota = Double.parseDouble(String.valueOf(jtResultadoSeleccionAlumno.getValueAt(linea, 2)));
+        System.out.println("nota: "+laNota);        
+        ins.actualizarNota(idAlumnoABuscar, idMateriaABuscar, laNota);
     }//GEN-LAST:event_jbGuardarActionPerformed
 
 
@@ -199,21 +210,24 @@ private void armarCabecera() {
         }        
     }
      
-     public void MateriasInscriptas() {        
+     public void cargarMateriasInscriptas() {        
         jbGuardar.setEnabled(true);        
         modelo.setRowCount(0);        
         String hayMaterias="N"; 
-        System.out.println("Entramos a MateriasInscriptas antes del for");
-        for(Inscripcion inscripcion:ins.obtenerInscripcionesPorAlumno(idAlumnoABuscar)){      
-           modelo.addRow(new Object []{
-                   ins2.getMateria().getIdMateria(),
-                   ins2.getMateria().getNombre(),
-                   ins2.getNota(),
-           
-           }); 
-           System.out.println("Traspasamos el for");
+        System.out.println("Entramos a MateriasInscriptas antes del for");        
+        for(Inscripcion inscrip2:ins.obtenerInscripcionesPorAlumno(idAlumnoABuscar)){      
+           System.out.println("Ingreso a armar la Jtabla con los datos traidos");
+           System.out.println("idMAteria: "+inscrip2.getMateria().getIdMateria());
+           System.out.println("Nombre: "+inscrip2.getMateria().getNombre());
+           System.out.println("Nota: "+inscrip2.getNota());
+           modelo.addRow(new Object []{               
+                   inscrip2.getMateria().getIdMateria(),
+                   inscrip2.getMateria().getNombre(),
+                   inscrip2.getNota()         
+           });            
            hayMaterias="S";
         }
+        System.out.println("Traspasamos el for");
         if (hayMaterias=="N")
         {
             jbGuardar.setEnabled(false);        

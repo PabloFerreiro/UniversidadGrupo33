@@ -1,4 +1,4 @@
-// dia: 20/09/23 hs: 8:00
+// dia: 22/09/23 hs: 4:00am
 package universidadgrupo33.accesoADatos;
 
 import java.awt.Color;
@@ -153,7 +153,7 @@ public class MateriaData {
      //Método listarMaterias
       public List<Materia> listarMaterias() {
           
-        String sql = "SELECT idMateria, nombre, anio, estado FROM materia WHERE estado = 1";
+        String sql = "SELECT idMateria, nombre, anio, estado FROM materia WHERE estado = 1 ORDER BY nombre";        
         ArrayList<Materia> materias = new ArrayList<>();
         try {
             PreparedStatement ps=con.prepareStatement(sql);

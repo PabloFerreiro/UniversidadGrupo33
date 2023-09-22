@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+// dia: 22/09/23 hs: 4:00am
 package universidadgrupo33.vistas;
 import javax.swing.table.DefaultTableModel;
 import universidadgrupo33.accesoADatos.AlumnoData;
@@ -177,13 +173,16 @@ public class JIFConsultaAlumnoXMateria extends javax.swing.JInternalFrame {
     
     public void cargarTablaAlumnosMateria(int idMateriaBuscar) {                
         modelo.setRowCount(0);                
-        for(Materia mater:ins.obtenerMateriasCursadas(idAlumnoABuscar)){      
+        for(Alumno alumn:ins.obtenerAlumnosXMateria(idMateriaABuscar)){      
            modelo.addRow(new Object []{
-                   mater.getIdMateria(),
-                   mater.getNombre(),
-                   mater.getAño()});                                       
+                   alumn.getIdAlumno(),
+                   alumn.getDni(),
+                   alumn.getApellido(),
+                   alumn.getNombre(),
+           });                    
         }        
     }  
+    
 
 
 }
