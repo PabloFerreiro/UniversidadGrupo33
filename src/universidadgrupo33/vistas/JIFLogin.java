@@ -4,7 +4,9 @@
  * and open the template in the editor.
  */
 package universidadgrupo33.vistas;
-import universidadgrupo33.vistas.*;
+
+import javax.swing.JOptionPane;
+
 public class JIFLogin extends javax.swing.JInternalFrame {
 
     /**
@@ -12,6 +14,7 @@ public class JIFLogin extends javax.swing.JInternalFrame {
      */
     public JIFLogin() {
         initComponents();
+        
     }
 
     /**
@@ -31,7 +34,7 @@ public class JIFLogin extends javax.swing.JInternalFrame {
         setName("jiflogueo"); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabel1.setText("LOGIN");
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/universidadgrupo33/images/Logo.png"))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel2.setText("USUARIO");
@@ -61,7 +64,7 @@ public class JIFLogin extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(91, 91, 91)
+                .addContainerGap(79, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
@@ -69,14 +72,14 @@ public class JIFLogin extends javax.swing.JInternalFrame {
                     .addComponent(jLabel3)
                     .addComponent(jpfPassLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(92, Short.MAX_VALUE))
+                .addContainerGap(80, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
+                .addGap(30, 30, 30)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jtfUsuarioLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -86,7 +89,7 @@ public class JIFLogin extends javax.swing.JInternalFrame {
                 .addComponent(jpfPassLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(42, 42, 42)
                 .addComponent(jbIngresar)
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
 
         pack();
@@ -97,7 +100,31 @@ public class JIFLogin extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jtfUsuarioLoginActionPerformed
 
     private void jbIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbIngresarActionPerformed
-//       editarObloquearMenues(true, true, true, true, true, false);  
+       
+        String password = new String(jpfPassLogin.getPassword());
+        MenuPrincipal menuPrincipal = (MenuPrincipal) getTopLevelAncestor();
+
+        if (jtfUsuarioLogin.getText().equals("pepe") && password.equals("1234")) {
+            //MenuPrincipal menuPrincipal = (MenuPrincipal) getTopLevelAncestor();
+            menuPrincipal.editarObloquearMenues(true, true, true, true, true, false, false);
+            JOptionPane.showMessageDialog(this, "Usuario logueado con exito");
+            this.setEnabled(false);
+            this.setVisible(false);
+
+        } else {
+            if (jtfUsuarioLogin.getText().equals("") || password.equals("")) {
+                //MenuPrincipal menuPrincipal = (MenuPrincipal) getTopLevelAncestor();
+                JOptionPane.showMessageDialog(this, "Por favor, complete los datos para ingresar");
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Usuario y/o contraseña incorrectos");
+            }
+            jtfUsuarioLogin.setText("");
+            jpfPassLogin.setText("");
+        }
+
+//        MenuPrincipal menuPrincipal = (MenuPrincipal) getTopLevelAncestor();
+//        menuPrincipal.editarObloquearMenues(true, true, true, true, true, false);  
     }//GEN-LAST:event_jbIngresarActionPerformed
 
 
@@ -129,5 +156,4 @@ public class JIFLogin extends javax.swing.JInternalFrame {
 //        //System.out.println("txt5="+jmSalir.getFocusTraversalKeysEnabled());
 //        //System.out.println("txt6="+jmIniciarSesion.getFocusTraversalKeysEnabled());        
 //    }
-
 }

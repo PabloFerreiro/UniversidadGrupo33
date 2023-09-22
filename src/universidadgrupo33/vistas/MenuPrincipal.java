@@ -1,6 +1,7 @@
 // dia: 22/09/23 hs: 4:00am
 package universidadgrupo33.vistas;
 
+import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -37,8 +38,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
         }
     }
     public MenuPrincipal() {
+       
         initComponents();
-        editarObloquearMenues(false ,false , false, false, false, true);
+        editarObloquearMenues(false ,false , false, false, true, true, true);
         
         this.setTitle("UNIVERSIDAD ULP");        
         // las siguientes 3 lineas permiten visualiar el logo de la empresa del sistema
@@ -152,6 +154,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(jmConsultas);
 
         jmSalir.setText("Salir");
+        jmSalir.setAlignmentX(20.0F);
         jmSalir.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jmSalir.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -275,6 +278,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jiflogin.setVisible(true);
         jdpEscritorio.add(jiflogin);
         jdpEscritorio.moveToFront(jiflogin);
+        
 
         // Lineas para centrar el jInternalFrame dentro del desktopPane
         Dimension desktopSize = jdpEscritorio.getSize();
@@ -351,10 +355,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     // permite el bloqueo o habilitacion de los Jmenu
-    public void editarObloquearMenues(boolean txt1,boolean txt2,boolean txt3,boolean txt4,boolean txt5,boolean txt6)    
+    public void editarObloquearMenues(boolean txt1,boolean txt2,boolean txt3,boolean txt4,boolean txt5,boolean txt6, boolean txt7)    
     {
-        // setEditable() PERMITE HABILITAR O DESAHBILITAR EL INGRESO DE DATOS EN LOS CAMPOS TEXTFIELD 
-        // setEnabled() PERMITE HABILITAR O DESAHBILITAR EL INGRESO DE DATOS y  NO PODER SELECCIONAR EN LOS CAMPOS TEXTFIELD         
+               
         if (txt1) {jmAlumno.setEnabled(true);                
         }else {jmAlumno.setEnabled(false);}               
         if (txt2) {jmMateria.setEnabled(true);                
@@ -366,9 +369,10 @@ public class MenuPrincipal extends javax.swing.JFrame {
         if (txt5) {jmSalir.setEnabled(true);                
         }else {jmSalir.setEnabled(false);}                       
         if (txt6) {jmIniciarSesion.setEnabled(true);                
-        }else {jmIniciarSesion.setEnabled(false);}          
-        //System.out.println("txt5="+jmSalir.getFocusTraversalKeysEnabled());
-        //System.out.println("txt6="+jmIniciarSesion.getFocusTraversalKeysEnabled());        
+        }else {jmIniciarSesion.setEnabled(false);}  
+        if (txt7) {jmIniciarSesion.setVisible(true);
+        }else {jmIniciarSesion.setVisible(false);}          
+         
     }
     
 

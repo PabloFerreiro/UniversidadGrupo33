@@ -102,6 +102,7 @@
         <Menu class="javax.swing.JMenu" name="jmSalir">
           <Properties>
             <Property name="text" type="java.lang.String" value="Salir"/>
+            <Property name="alignmentX" type="float" value="20.0"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Dialog" size="18" style="1"/>
             </Property>
