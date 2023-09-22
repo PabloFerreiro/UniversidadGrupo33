@@ -126,7 +126,7 @@ public class InscripcionData {
             ps.close();
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a las Bases de Datos. No se pudo realizr el informe de Inscripciones: " + ex);
+            JOptionPane.showMessageDialog(null, "Error al acceder a las Bases de Datos. No se pudo realizar el informe de Inscripciones: " + ex);
         }
         //return inscripcion;         
         return resumen;
@@ -216,82 +216,60 @@ public class InscripcionData {
     }
     
        //método obtener Inscripciones segun video
-    public List<Inscripcion> obtenerInscripcionesPorAlumno(int idAlumno) {
-        System.out.println("Antes de instanciar el arraylist");
-        System.out.println("idAlumno a tomar: "+idAlumno);
+    public List<Inscripcion> obtenerInscripcionesPorAlumno(int idAlumno) {      
      ArrayList<Inscripcion> inscripcion = new ArrayList<>();
-        Alumno alum = new Alumno();
-        Materia mater = new Materia();
-        Inscripcion inscrip=new Inscripcion();
+        
         String sql = "SELECT A.idinscripto, A.idAlumno, A.idMateria, B.nombre, A.nota, B.anio "                
                 + "FROM inscripcion A, materia B "
                 + "WHERE A.idAlumno = ? AND A.idMateria = B.idMateria";
-        try {
-            System.out.println("Antes del PreparedStatement");
+        try {        
             PreparedStatement ps = con.prepareStatement(sql);
             //seteamos el id de materia que viene por parametro
-            ps.setInt(1, idAlumno);
-            System.out.println("Antes del Resulset");
-            ResultSet rs = ps.executeQuery(); 
-            System.out.println("Despues del Resulset");            
-            System.out.println("Entrando al while" + rs.next());           
+            ps.setInt(1, idAlumno);        
+            ResultSet rs = ps.executeQuery();         
             // las dos lineas siguientes toman la cantidad de registros traidos desde SQL
-            rs.last();
-            int cantidadRegistrosSql = rs.getRow();
-            System.out.println("Cantidad de registros encontrados en Sql: " + cantidadRegistrosSql);                        
+            //rs.last();
+            //int cantidadRegistrosSql = rs.getRow();        
             // las dos lineas siguientes toman la primera posicion de registros traidos desde SQL
-            rs.beforeFirst();
-            int posicionInicialPunteroSql=rs.getRow();
-            System.out.println("Primera posicion a leer desde Sql: " + posicionInicialPunteroSql);                                    
+            //rs.beforeFirst();
+            //int posicionInicialPunteroSql=rs.getRow();
             while (rs.next())            
             {                
-                posicionInicialPunteroSql=rs.getRow();
-                System.out.println("Nro registro leido de sql: " + posicionInicialPunteroSql);                        
-                System.out.println("Paso1");
+                Alumno alum = new Alumno();
+                Materia mater = new Materia();
+                Inscripcion inscrip=new Inscripcion();
+                //posicionInicialPunteroSql=rs.getRow();
                 //Inscripcion inscrip=new Inscripcion();
-                  System.out.println(rs.getInt("A.idInscripto"));
              inscrip.setIdInscripcion(rs.getInt("A.idInscripto"));             
-                  System.out.println(rs.getDouble("A.nota"));                
-             inscrip.setNota(rs.getDouble("A.nota"));             
-                System.out.println("Paso2");
-                //Alumno alum = new Alumno();
-                System.out.println("Paso3");
-                //Materia mater = new Materia();
-                System.out.println("Paso4");        
-                  System.out.println(rs.getInt("A.idAlumno"));                
-                alum.setIdAlumno(rs.getInt("A.idAlumno"));
-                System.out.println("Paso5");
-                  System.out.println(rs.getInt("A.idMateria"));                
-                mater.setIdMateria(rs.getInt("A.idMateria"));                
-                System.out.println("Paso6");
-                  System.out.println(rs.getString("B.nombre"));                
-                mater.setNombre(rs.getString("B.nombre"));
-                System.out.println("Paso7");
-                  System.out.println(rs.getInt("B.anio"));                
-                mater.setAño(rs.getInt("B.anio"));
-                System.out.println("Paso8");                
-             inscrip.setAlumno(alum);
-                System.out.println("Paso9");
-             inscrip.setMateria(mater);
-                System.out.println("Paso10");             
+             //inscrip.setNota(rs.getDouble("A.nota"));                             
+             //inscrip.setNota(rs.getDouble("A.nota"));                             
+             inscrip.setNota(rs.getDouble(5));                             
+                //alum.setIdAlumno(rs.getInt("A.idAlumno"));                
+                alum.setIdAlumno(rs.getInt(2));                
+                //mater.setIdMateria(rs.getInt("A.idMateria"));                                
+                mater.setIdMateria(rs.getInt(3));                                
+                //mater.setNombre(rs.getString("B.nombre"));                
+                mater.setNombre(rs.getString(4));                
+                //mater.setAño(rs.getInt("B.anio"));                
+                mater.setAño(rs.getInt(6));                
+             inscrip.setAlumno(alum);                
+             inscrip.setMateria(mater);                
                 inscripcion.add(inscrip);  
-                System.out.println(inscrip.getIdInscripcion()+"/"+inscrip.getAlumno().getIdAlumno()+"/"+inscrip.getMateria().getIdMateria()+"/"+inscrip.getNota());                             
-                System.out.println(inscripcion.toString());                             
-                System.out.println("Paso11");
             }
             ps.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a las Bases de Datos de Inscripcion: " + ex);
         }
         //return inscripcion;         
-        System.out.println("datos a enviar a la tabla");                             
+        /*
         for(Inscripcion inscrip2:inscripcion){      
            System.out.println("recorro al Array a pasar a la tabla antes de ir armarla");
            System.out.println("idMAteria: "+inscrip2.getMateria().getIdMateria());
            System.out.println("Nombre: "+inscrip2.getMateria().getNombre());
            System.out.println("Nota: "+inscrip2.getNota());                      
         }
-        System.out.println("FINAL recorrido del Array ");
+        */
+        System.out.println("IMPRIMIENDO LISTA DE INSCRIPCIONES: "+inscripcion);
         return inscripcion;
     };
           
@@ -492,5 +470,85 @@ public class InscripcionData {
         return resumen;
     }
     
-    
+    /*
+    public List<Inscripcion> obtenerInscripcionesPorAlumno(int idAlumno) {
+        System.out.println("Antes de instanciar el arraylist");
+        System.out.println("idAlumno a tomar: "+idAlumno);
+     ArrayList<Inscripcion> inscripcion = new ArrayList<>();
+        Alumno alum = new Alumno();
+        Materia mater = new Materia();
+        Inscripcion inscrip=new Inscripcion();
+        String sql = "SELECT A.idinscripto, A.idAlumno, A.idMateria, B.nombre, A.nota, B.anio "                
+                + "FROM inscripcion A, materia B "
+                + "WHERE A.idAlumno = ? AND A.idMateria = B.idMateria";
+        try {
+            System.out.println("Antes del PreparedStatement");
+            PreparedStatement ps = con.prepareStatement(sql);
+            //seteamos el id de materia que viene por parametro
+            ps.setInt(1, idAlumno);
+            System.out.println("Antes del Resulset");
+            ResultSet rs = ps.executeQuery(); 
+            System.out.println("Despues del Resulset");            
+            System.out.println("Entrando al while" + rs.next());           
+            // las dos lineas siguientes toman la cantidad de registros traidos desde SQL
+            rs.last();
+            int cantidadRegistrosSql = rs.getRow();
+            System.out.println("Cantidad de registros encontrados en Sql: " + cantidadRegistrosSql);                        
+            // las dos lineas siguientes toman la primera posicion de registros traidos desde SQL
+            rs.beforeFirst();
+            int posicionInicialPunteroSql=rs.getRow();
+            System.out.println("Primera posicion a leer desde Sql: " + posicionInicialPunteroSql);                                    
+            while (rs.next())            
+            {                
+                posicionInicialPunteroSql=rs.getRow();
+                System.out.println("Nro registro leido de sql: " + posicionInicialPunteroSql);                        
+                System.out.println("Paso1");
+                //Inscripcion inscrip=new Inscripcion();
+                  System.out.println(rs.getInt("A.idInscripto"));
+             inscrip.setIdInscripcion(rs.getInt("A.idInscripto"));             
+                  System.out.println(rs.getDouble("A.nota"));                
+             inscrip.setNota(rs.getDouble("A.nota"));             
+                System.out.println("Paso2");
+                //Alumno alum = new Alumno();
+                System.out.println("Paso3");
+                //Materia mater = new Materia();
+                System.out.println("Paso4");        
+                  System.out.println(rs.getInt("A.idAlumno"));                
+                alum.setIdAlumno(rs.getInt("A.idAlumno"));
+                System.out.println("Paso5");
+                  System.out.println(rs.getInt("A.idMateria"));                
+                mater.setIdMateria(rs.getInt("A.idMateria"));                
+                System.out.println("Paso6");
+                  System.out.println(rs.getString("B.nombre"));                
+                mater.setNombre(rs.getString("B.nombre"));
+                System.out.println("Paso7");
+                  System.out.println(rs.getInt("B.anio"));                
+                mater.setAño(rs.getInt("B.anio"));
+                System.out.println("Paso8");                
+             inscrip.setAlumno(alum);
+                System.out.println("Paso9");
+             inscrip.setMateria(mater);
+                System.out.println("Paso10");             
+                inscripcion.add(inscrip);  
+                System.out.println(inscrip.getIdInscripcion()+"/"+inscrip.getAlumno().getIdAlumno()+"/"+inscrip.getMateria().getIdMateria()+"/"+inscrip.getNota());                             
+                System.out.println(inscrip.toString());                             
+                
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a las Bases de Datos de Inscripcion: " + ex);
+        }
+        //return inscripcion;         
+        System.out.println("Paso11");
+        System.out.println("datos a enviar a la tabla");                             
+        for(Inscripcion inscrip2:inscripcion){      
+           System.out.println("recorro al Array a pasar a la tabla antes de ir armarla");
+           System.out.println("idMAteria: "+inscrip2.getMateria().getIdMateria());
+           System.out.println("Nombre: "+inscrip2.getMateria().getNombre());
+           System.out.println("Nota: "+inscrip2.getNota());                      
+        }
+        System.out.println("FINAL recorrido del Array ");
+        return inscripcion;
+    };
+    */
 }

@@ -15,8 +15,8 @@ import universidadgrupo33.entidades.Materia;
 public class JIFConsultaAlumnoXMateria extends javax.swing.JInternalFrame {
 
    private DefaultTableModel modelo = new DefaultTableModel(){
-    public boolean isCellEditable (int f, int c){
-    return false;
+    public boolean isCellEditable (int f, int c){        
+        return false;
     }
     };
    

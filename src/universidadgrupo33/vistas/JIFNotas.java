@@ -214,12 +214,14 @@ private void armarCabecera() {
         jbGuardar.setEnabled(true);        
         modelo.setRowCount(0);        
         String hayMaterias="N"; 
-        System.out.println("Entramos a MateriasInscriptas antes del for");        
+        //System.out.println("Entramos a MateriasInscriptas antes del for");        
         for(Inscripcion inscrip2:ins.obtenerInscripcionesPorAlumno(idAlumnoABuscar)){      
+            /*
            System.out.println("Ingreso a armar la Jtabla con los datos traidos");
            System.out.println("idMAteria: "+inscrip2.getMateria().getIdMateria());
            System.out.println("Nombre: "+inscrip2.getMateria().getNombre());
            System.out.println("Nota: "+inscrip2.getNota());
+*/
            modelo.addRow(new Object []{               
                    inscrip2.getMateria().getIdMateria(),
                    inscrip2.getMateria().getNombre(),
@@ -227,7 +229,7 @@ private void armarCabecera() {
            });            
            hayMaterias="S";
         }
-        System.out.println("Traspasamos el for");
+        //System.out.println("Traspasamos el for");
         if (hayMaterias=="N")
         {
             jbGuardar.setEnabled(false);        

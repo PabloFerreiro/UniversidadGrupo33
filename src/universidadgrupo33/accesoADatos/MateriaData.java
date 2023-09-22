@@ -145,7 +145,7 @@ public class MateriaData {
             }
             ps.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Alumno. No se pudo Recuperar al alumno" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Materia. No se pudo Recuperar al alumno" + ex.getMessage());
         }
         return exito;
     }
@@ -169,7 +169,7 @@ public class MateriaData {
             }
             ps.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Alumno. No se pudo buscar el alumno");
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Mateteria. No se pudo buscar el alumno");
         }
         return materias;         
       };
