@@ -15,7 +15,7 @@ public class JIFLogin extends javax.swing.JInternalFrame {
     public JIFLogin() {
         initComponents();
         this.setTitle("UNIVERSIDAD ULP - Ingresar");
-        
+
     }
 
     /**
@@ -101,14 +101,14 @@ public class JIFLogin extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jtfUsuarioLoginActionPerformed
 
     private void jbIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbIngresarActionPerformed
-       
+
         String password = new String(jpfPassLogin.getPassword());
         MenuPrincipal menuPrincipal = (MenuPrincipal) getTopLevelAncestor();
 
         if (jtfUsuarioLogin.getText().equals("pepe") && password.equals("1234")) {
             //MenuPrincipal menuPrincipal = (MenuPrincipal) getTopLevelAncestor();
             menuPrincipal.editarObloquearMenues(true, true, true, true, true, false, false);
-            JOptionPane.showMessageDialog(this, "Usuario logueado con exito");
+            JOptionPane.showMessageDialog(this, "Usuario logueado con éxito");
             this.setEnabled(false);
             this.setVisible(false);
 
@@ -124,8 +124,7 @@ public class JIFLogin extends javax.swing.JInternalFrame {
             jpfPassLogin.setText("");
         }
 
-//        MenuPrincipal menuPrincipal = (MenuPrincipal) getTopLevelAncestor();
-//        menuPrincipal.editarObloquearMenues(true, true, true, true, true, false);  
+
     }//GEN-LAST:event_jbIngresarActionPerformed
 
 
@@ -138,23 +137,4 @@ public class JIFLogin extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jtfUsuarioLogin;
     // End of variables declaration//GEN-END:variables
 
-//public void editarObloquearMenues(boolean txt1,boolean txt2,boolean txt3,boolean txt4,boolean txt5,boolean txt6)    
-//    {
-//        // setEditable() PERMITE HABILITAR O DESAHBILITAR EL INGRESO DE DATOS EN LOS CAMPOS TEXTFIELD 
-//        // setEnabled() PERMITE HABILITAR O DESAHBILITAR EL INGRESO DE DATOS y  NO PODER SELECCIONAR EN LOS CAMPOS TEXTFIELD         
-//        if (txt1) {jmAlumno.setEnabled(true);                
-//        }else {jmAlumno.setEnabled(false);}               
-//        if (txt2) {jmMateria.setEnabled(true);                
-//        }else {jmMateria.setEnabled(false);}               
-//        if (txt3) {jmAdministracion.setEnabled(true);                
-//        }else {jmAdministracion.setEnabled(false);}                           
-//        if (txt4) {jmConsultas.setEnabled(true);                
-//        }else {jmConsultas.setEnabled(false);}               
-//        if (txt5) {jmSalir.setEnabled(true);                
-//        }else {jmSalir.setEnabled(false);}                       
-//        if (txt6) {jmIniciarSesion.setEnabled(true);                
-//        }else {jmIniciarSesion.setEnabled(false);}          
-//        //System.out.println("txt5="+jmSalir.getFocusTraversalKeysEnabled());
-//        //System.out.println("txt6="+jmIniciarSesion.getFocusTraversalKeysEnabled());        
-//    }
 }
