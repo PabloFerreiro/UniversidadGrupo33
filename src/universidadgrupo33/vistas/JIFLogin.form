@@ -63,7 +63,7 @@
           <Font name="Dialog" size="24" style="1"/>
         </Property>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/universidadgrupo33/images/Logo.png"/>
+          <Image iconType="3" name="/universidadgrupo33/vistas/images/Logo.png"/>
         </Property>
       </Properties>
     </Component>

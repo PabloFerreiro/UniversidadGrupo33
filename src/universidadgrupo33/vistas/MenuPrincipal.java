@@ -7,7 +7,6 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-
 import java.io.PrintStream;
 import javax.swing.JLabel;
 // para que capture lo que se ingreso por la pantalla 
@@ -40,11 +39,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
     public MenuPrincipal() {
        
         initComponents();
+        this.setLocationRelativeTo(null);
         editarObloquearMenues(false ,false , false, false, true, true, true);
         
         this.setTitle("UNIVERSIDAD ULP");        
         // las siguientes 3 lineas permiten visualiar el logo de la empresa del sistema
-        Image iconoPropio = Toolkit.getDefaultToolkit().getImage(getClass().getResource("Grupo332023.png"));
+        Image iconoPropio = Toolkit.getDefaultToolkit().getImage(getClass().getResource("images/Grupo332023.png"));
         setIconImage(iconoPropio);
         setVisible(true);
         //jmSalir.setFocusTraversalKeysEnabled(true);

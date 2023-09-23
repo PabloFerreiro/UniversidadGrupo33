@@ -78,9 +78,9 @@
               <Component id="jScrollPane1" min="-2" pref="175" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jbInscribir" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jbAnularInscripcion" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jbSalir" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jbInscribir" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                  <Component id="jbAnularInscripcion" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                  <Component id="jbSalir" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="41" max="32767" attributes="0"/>
           </Group>

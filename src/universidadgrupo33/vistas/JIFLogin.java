@@ -14,6 +14,7 @@ public class JIFLogin extends javax.swing.JInternalFrame {
      */
     public JIFLogin() {
         initComponents();
+        this.setTitle("UNIVERSIDAD ULP - Ingresar");
         
     }
 
@@ -34,7 +35,7 @@ public class JIFLogin extends javax.swing.JInternalFrame {
         setName("jiflogueo"); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/universidadgrupo33/images/Logo.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/universidadgrupo33/vistas/images/Logo.png"))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel2.setText("USUARIO");
