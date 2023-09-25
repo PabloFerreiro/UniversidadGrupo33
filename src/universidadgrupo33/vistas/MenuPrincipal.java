@@ -12,11 +12,10 @@ import javax.swing.JLabel;
 // para que capture lo que se ingreso por la pantalla 
 import javax.swing.JTextField;
 
+public class MenuPrincipal extends javax.swing.JFrame {
 
-public class MenuPrincipal extends javax.swing.JFrame {    
     // PARA PODER CREAR UN OPCION DE ELEGIR SI DESEA SALIR O NO CUANDO PRESIONA -SALIR o X-
-    public void Cerrar(int tipo)
-    {         
+    public void Cerrar(int tipo) {
         String botones[] = {"Cerrar", "Cancelar"};
         int eleccion = JOptionPane.showOptionDialog(this, "¿Desea cerrar la Aplicación?", "Titulo",
                 0, 0, null, botones, this);
@@ -29,28 +28,28 @@ public class MenuPrincipal extends javax.swing.JFrame {
             } else {
                 System.exit(0);
             }
-           
+
         } else {
             if (eleccion == JOptionPane.NO_OPTION) {
-               JOptionPane.showMessageDialog(this, "Cierre cancelado...");
+                JOptionPane.showMessageDialog(this, "Cierre cancelado...");
             }
         }
     }
+
     public MenuPrincipal() {
-       
+
         initComponents();
         this.setLocationRelativeTo(null);
-        editarObloquearMenues(false ,false , false, false, true, true, true);
-        
-        this.setTitle("UNIVERSIDAD ULP");        
+        editarObloquearMenues(false, false, false, false, true, true, true);
+
+        this.setTitle("UNIVERSIDAD ULP");
         // las siguientes 3 lineas permiten visualiar el logo de la empresa del sistema
         Image iconoPropio = Toolkit.getDefaultToolkit().getImage(getClass().getResource("images/Grupo332023.png"));
         setIconImage(iconoPropio);
         setVisible(true);
         //jmSalir.setFocusTraversalKeysEnabled(true);
         //editarObloquearMenues(false,false,false,false,false,true);
-        
-        
+
     }
 
     /**
@@ -203,8 +202,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
         Dimension desktopSize = jdpEscritorio.getSize();
         Dimension jInternalFrameSize = jifalumno.getSize();
         jifalumno.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
-        (desktopSize.height - jInternalFrameSize.height) / 2);
-                
+                (desktopSize.height - jInternalFrameSize.height) / 2);
+
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
@@ -219,7 +218,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         Dimension desktopSize = jdpEscritorio.getSize();
         Dimension jInternalFrameSize = jifinscripciones.getSize();
         jifinscripciones.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
-        (desktopSize.height - jInternalFrameSize.height) / 2);
+                (desktopSize.height - jInternalFrameSize.height) / 2);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
@@ -234,7 +233,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         Dimension desktopSize = jdpEscritorio.getSize();
         Dimension jInternalFrameSize = jifmateria.getSize();
         jifmateria.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
-        (desktopSize.height - jInternalFrameSize.height) / 2);
+                (desktopSize.height - jInternalFrameSize.height) / 2);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
@@ -249,7 +248,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         Dimension desktopSize = jdpEscritorio.getSize();
         Dimension jInternalFrameSize = jifnotas.getSize();
         jifnotas.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
-        (desktopSize.height - jInternalFrameSize.height) / 2);
+                (desktopSize.height - jInternalFrameSize.height) / 2);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
@@ -264,14 +263,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
         Dimension desktopSize = jdpEscritorio.getSize();
         Dimension jInternalFrameSize = jifalumnoxmateria.getSize();
         jifalumnoxmateria.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
-        (desktopSize.height - jInternalFrameSize.height) / 2);
+                (desktopSize.height - jInternalFrameSize.height) / 2);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jmSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmSalirMouseClicked
-    // cuando habilito esta linea me obliga a hacer doble-click con el raton para contestar un dialogo
-    Cerrar(1);        
-    // cuando uso esta orden se ejecuta con un solo click del raton, todo bien asi....
-    //System.exit(0);
+        // cuando habilito esta linea me obliga a hacer doble-click con el raton para contestar un dialogo
+        Cerrar(1);
+        // cuando uso esta orden se ejecuta con un solo click del raton, todo bien asi....
+        //System.exit(0);
     }//GEN-LAST:event_jmSalirMouseClicked
 
     private void jmIniciarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jmIniciarSesionMouseClicked
@@ -281,15 +280,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jiflogin.setVisible(true);
         jdpEscritorio.add(jiflogin);
         jdpEscritorio.moveToFront(jiflogin);
-        
 
         // Lineas para centrar el jInternalFrame dentro del desktopPane
         Dimension desktopSize = jdpEscritorio.getSize();
         Dimension jInternalFrameSize = jiflogin.getSize();
         jiflogin.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
-        (desktopSize.height - jInternalFrameSize.height) / 2);
+                (desktopSize.height - jInternalFrameSize.height) / 2);
     }//GEN-LAST:event_jmIniciarSesionMouseClicked
-    
+
     /*
         jdpEscritorio.removeAll();
         jdpEscritorio.repaint();
@@ -304,8 +302,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         (desktopSize.height - jInternalFrameSize.height) / 2);
         // activa los menues a utilizar, salvo a de inciarSesion que debera mantenerse asi hasta el final
         editarObloquearMenues(false,true,true,true,true,false);    
-    */
-    
+     */
     /**
      * @param args the command line arguments
      */
@@ -358,30 +355,44 @@ public class MenuPrincipal extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     // permite el bloqueo o habilitacion de los Jmenu
-    public void editarObloquearMenues(boolean txt1,boolean txt2,boolean txt3,boolean txt4,boolean txt5,boolean txt6, boolean txt7)    
-    {
-               
-        if (txt1) {jmAlumno.setEnabled(true);                
-        }else {jmAlumno.setEnabled(false);}               
-        if (txt2) {jmMateria.setEnabled(true);                
-        }else {jmMateria.setEnabled(false);}               
-        if (txt3) {jmAdministracion.setEnabled(true);                
-        }else {jmAdministracion.setEnabled(false);}                           
-        if (txt4) {jmConsultas.setEnabled(true);                
-        }else {jmConsultas.setEnabled(false);}               
-        if (txt5) {jmSalir.setEnabled(true);                
-        }else {jmSalir.setEnabled(false);}                       
-        if (txt6) {jmIniciarSesion.setEnabled(true);                
-        }else {jmIniciarSesion.setEnabled(false);}  
-        if (txt7) {jmIniciarSesion.setVisible(true);
-        }else {jmIniciarSesion.setVisible(false);}          
-         
+    public void editarObloquearMenues(boolean txt1, boolean txt2, boolean txt3, boolean txt4, boolean txt5, boolean txt6, boolean txt7) {
+
+        if (txt1) {
+            jmAlumno.setEnabled(true);
+        } else {
+            jmAlumno.setEnabled(false);
+        }
+        if (txt2) {
+            jmMateria.setEnabled(true);
+        } else {
+            jmMateria.setEnabled(false);
+        }
+        if (txt3) {
+            jmAdministracion.setEnabled(true);
+        } else {
+            jmAdministracion.setEnabled(false);
+        }
+        if (txt4) {
+            jmConsultas.setEnabled(true);
+        } else {
+            jmConsultas.setEnabled(false);
+        }
+        if (txt5) {
+            jmSalir.setEnabled(true);
+        } else {
+            jmSalir.setEnabled(false);
+        }
+        if (txt6) {
+            jmIniciarSesion.setEnabled(true);
+        } else {
+            jmIniciarSesion.setEnabled(false);
+        }
+        if (txt7) {
+            jmIniciarSesion.setVisible(true);
+        } else {
+            jmIniciarSesion.setVisible(false);
+        }
+
     }
-    
-
-
-
-
-
 
 }
