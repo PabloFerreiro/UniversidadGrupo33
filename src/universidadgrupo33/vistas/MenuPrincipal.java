@@ -195,23 +195,26 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jdpEscritorio.removeAll();
         jdpEscritorio.repaint();
         JIFAlumno jifalumno = new JIFAlumno();
-        jifalumno.setVisible(true);
+
         jdpEscritorio.add(jifalumno);
+        jifalumno.setVisible(true);
         jdpEscritorio.moveToFront(jifalumno);
         // Lineas para centrar el jInternalFrame dentro del desktopPane
         Dimension desktopSize = jdpEscritorio.getSize();
         Dimension jInternalFrameSize = jifalumno.getSize();
         jifalumno.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
                 (desktopSize.height - jInternalFrameSize.height) / 2);
-
+       
+       
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         jdpEscritorio.removeAll();
         jdpEscritorio.repaint();
         JIFInscripciones jifinscripciones = new JIFInscripciones();
-        jifinscripciones.setVisible(true);
+        
         jdpEscritorio.add(jifinscripciones);
+        jifinscripciones.setVisible(true);
         jdpEscritorio.moveToFront(jifinscripciones);
 
         // Lineas para centrar el jInternalFrame dentro del desktopPane
@@ -225,8 +228,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jdpEscritorio.removeAll();
         jdpEscritorio.repaint();
         JIFMateria jifmateria = new JIFMateria();
-        jifmateria.setVisible(true);
+        
         jdpEscritorio.add(jifmateria);
+        jifmateria.setVisible(true);
         jdpEscritorio.moveToFront(jifmateria);
 
         // Lineas para centrar el jInternalFrame dentro del desktopPane
@@ -240,8 +244,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jdpEscritorio.removeAll();
         jdpEscritorio.repaint();
         JIFNotas jifnotas = new JIFNotas();
-        jifnotas.setVisible(true);
+        
         jdpEscritorio.add(jifnotas);
+        jifnotas.setVisible(true);
         jdpEscritorio.moveToFront(jifnotas);
 
         // Lineas para centrar el jInternalFrame dentro del desktopPane
@@ -255,8 +260,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jdpEscritorio.removeAll();
         jdpEscritorio.repaint();
         JIFConsultaAlumnoXMateria jifalumnoxmateria = new JIFConsultaAlumnoXMateria();
-        jifalumnoxmateria.setVisible(true);
+        
         jdpEscritorio.add(jifalumnoxmateria);
+        jifalumnoxmateria.setVisible(true);
         jdpEscritorio.moveToFront(jifalumnoxmateria);
 
         // Lineas para centrar el jInternalFrame dentro del desktopPane
@@ -277,15 +283,19 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jdpEscritorio.removeAll();
         jdpEscritorio.repaint();
         JIFLogin jiflogin = new JIFLogin();
-        jiflogin.setVisible(true);
         jdpEscritorio.add(jiflogin);
-        jdpEscritorio.moveToFront(jiflogin);
+        jiflogin.setVisible(true); 
+        //jdpEscritorio.moveToFront(jiflogin);
+        
 
         // Lineas para centrar el jInternalFrame dentro del desktopPane
         Dimension desktopSize = jdpEscritorio.getSize();
         Dimension jInternalFrameSize = jiflogin.getSize();
         jiflogin.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
                 (desktopSize.height - jInternalFrameSize.height) / 2);
+        
+//        jiflogin.requestFocus();
+//        jdpEscritorio.revalidate();
     }//GEN-LAST:event_jmIniciarSesionMouseClicked
 
     /*

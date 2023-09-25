@@ -46,6 +46,7 @@ public class JIFInscripciones extends javax.swing.JInternalFrame {
         // version VIEJA usando COMBOBOX
         //cargarComboBoxALumnos();
         this.setTitle("UNIVERSIDAD ULP - Formulario de Inscripción");
+        jcbSeleccionAlumno.setFocusable(true);
     }
 
     /**

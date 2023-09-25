@@ -96,6 +96,7 @@ public class JIFMateria extends javax.swing.JInternalFrame {
     public JIFMateria() {
         initComponents();        
         this.setTitle("UNIVERSIDAD ULP - Gestión de Materia");
+        jtfIdMateria.setFocusable(true);
         limpiarDatos(0);
         editarObloquearIngresos(true,false,false,false);
         jbGuardar.setEnabled(false);

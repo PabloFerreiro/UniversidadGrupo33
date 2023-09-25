@@ -6,6 +6,9 @@
  */
 package universidadgrupo33.vistas;
 
+import java.beans.PropertyVetoException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class JIFLogin extends javax.swing.JInternalFrame {
@@ -16,7 +19,10 @@ public class JIFLogin extends javax.swing.JInternalFrame {
     public JIFLogin() {
         initComponents();
         this.setTitle("UNIVERSIDAD ULP - Ingresar");
+        //this.requestFocusInWindow();
+       
 
+        
     }
 
     /**
