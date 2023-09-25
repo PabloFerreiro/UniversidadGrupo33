@@ -2,7 +2,7 @@ package universidadgrupo33.entidades;
 
 import java.text.DecimalFormat;
 
-public class Materia 
+public class Materia implements Comparable<Materia> 
 {
 
     //atributos
@@ -74,6 +74,10 @@ public class Materia
         DecimalFormat df = new DecimalFormat("00");        
         return "id: " +df.format(idMateria)+ ", "+ nombre + ", Año: " + año + ", " + estado;
     }
-    
+
+    @Override
+    public int compareTo(Materia otroNombre) {
+        return this.nombre.compareTo(otroNombre.nombre);
+    }    
     
 }

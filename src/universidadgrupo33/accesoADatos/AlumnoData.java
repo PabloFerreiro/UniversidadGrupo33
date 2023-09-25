@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -19,6 +20,7 @@ import universidadgrupo33.entidades.Alumno;
 public class AlumnoData {
 
     private Connection con = null;
+    public static TreeSet<Alumno> listaAlumnos=new TreeSet<>();
 
     public AlumnoData() {
 
@@ -183,8 +185,8 @@ public class AlumnoData {
         }
         return alumno;
     }
-    
-    //método listar alumnos
+        
+    //Método listarAlumnos ANTERIOR para buscar en un COMBOBOX
     public List<Alumno> listarAlumnos(int bajaActivo) {
         String sql = "SELECT idAlumno, dni, apellido, nombre, fechaNacimiento, estado FROM alumno WHERE estado = ?"
                 + " ORDER BY apellido, nombre ";
@@ -212,6 +214,38 @@ public class AlumnoData {
         }        
         return alumnos;
     }
+    
+    //Método listarAlumnos NUEVA para buscar en una JTABLE
+      public TreeSet<Alumno> listarAlumnosJTable(int bajaActivo){                  
+        String sql = "SELECT idAlumno, dni, apellido, nombre, fechaNacimiento, estado FROM alumno WHERE estado = ?"
+                + " ORDER BY apellido, nombre ";
+        TreeSet<Alumno> alumnos=new TreeSet<>();
+        try {
+            PreparedStatement ps=con.prepareStatement(sql);
+            ps.setInt(1, bajaActivo);
+            ResultSet rs=ps.executeQuery();
+            while (rs.next()) {
+                Alumno alumno=new Alumno();
+                alumno.setIdAlumno(rs.getInt("idAlumno"));
+                alumno.setDni(rs.getInt("dni"));
+                alumno.setApellido(rs.getString("apellido"));
+                alumno.setNombre(rs.getString("nombre"));
+                alumno.setFechaNac(rs.getDate("fechaNacimiento").toLocalDate());                
+                alumno.setActivo(rs.getBoolean("estado"));                
+                // no se hace esta asignacion porque se entiende por defecto de que lo que 
+                // esta trayendo del sql son registros activos-true-
+                //alumno.setActivo(rs.getBoolean("estado"));
+                alumnos.add(alumno);                
+            }            
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Alumno. No se pudo buscar el alumno");
+        }        
+        catch (Exception ex2) {
+            JOptionPane.showMessageDialog(null, "Error 2:"+ex2);
+        }
+        return alumnos;        
+      };
     
     
     

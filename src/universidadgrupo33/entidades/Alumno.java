@@ -4,7 +4,8 @@ package universidadgrupo33.entidades;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 
-public class Alumno {
+public class Alumno implements Comparable<Alumno>
+{
     
     //atributos
     private int idAlumno;
@@ -98,6 +99,11 @@ public class Alumno {
         DecimalFormat df = new DecimalFormat("000");
         return "id: "+df.format(idAlumno)+", "+apellido +" "+nombre+ ", dni: " + dni;
         
+    }
+
+    @Override
+    public int compareTo(Alumno otroApellido) {
+        return this.apellido.compareTo(otroApellido.apellido);        
     }
     
     

@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
 import java.util.logging.Level;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,6 +22,7 @@ import universidadgrupo33.entidades.Materia;
 
 public class MateriaData {
      private Connection con = null;
+     public static TreeSet<Materia> listaMaterias=new TreeSet<>();
      
      public MateriaData() {
         con = Conexion.getConexion();
@@ -149,10 +151,9 @@ public class MateriaData {
         }
         return exito;
     }
-      
-     //Método listarMaterias
-      public List<Materia> listarMaterias() {
-          
+    
+    //Método listarMaterias ANTERIOR para buscar en un COMBOBOX
+    public List<Materia> listarMaterias() {          
         String sql = "SELECT idMateria, nombre, anio, estado FROM materia WHERE estado = 1 ORDER BY nombre";        
         ArrayList<Materia> materias = new ArrayList<>();
         try {
@@ -173,6 +174,34 @@ public class MateriaData {
         }
         return materias;         
       };
+      
+     //Método listarMaterias NUEVA para buscar en una JTABLE
+      public TreeSet<Materia> listarMateriasJTable() {          
+        String sql = "SELECT idMateria, nombre, anio, estado FROM materia WHERE estado = 1 ORDER BY nombre";            
+        TreeSet<Materia> materias=new TreeSet<>();
+        try {
+            PreparedStatement ps=con.prepareStatement(sql);
+            ResultSet rs=ps.executeQuery();
+            while (rs.next()) {
+                Materia mater=new Materia();
+                mater.setIdMateria(rs.getInt("idMateria"));
+                mater.setNombre(rs.getString("nombre"));
+                mater.setAño(rs.getInt("anio"));
+                mater.setEstado(rs.getBoolean("estado"));                
+                //System.out.println("1)"+mater.toString());
+                //System.out.println("2)"+materias);
+                materias.add(mater);                
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Mateteria. No se pudo buscar el alumno");
+        }
+        catch (Exception ex2) {
+            JOptionPane.showMessageDialog(null, "Error 2:"+ex2);
+        }
+        return materias;         
+      };
+      
       
       //Método proximoIdMateria
       public Materia proximoIdMateria() {                  

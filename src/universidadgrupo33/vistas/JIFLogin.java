@@ -1,4 +1,5 @@
 /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -105,7 +106,8 @@ public class JIFLogin extends javax.swing.JInternalFrame {
         String password = new String(jpfPassLogin.getPassword());
         MenuPrincipal menuPrincipal = (MenuPrincipal) getTopLevelAncestor();
 
-        if (jtfUsuarioLogin.getText().equals("pepe") && password.equals("1234")) {
+        //if (jtfUsuarioLogin.getText().equals("pepe") && password.equals("1234")) {
+        if (jtfUsuarioLogin.getText().equals("") && password.equals("")) {
             //MenuPrincipal menuPrincipal = (MenuPrincipal) getTopLevelAncestor();
             menuPrincipal.editarObloquearMenues(true, true, true, true, true, false, false);
             JOptionPane.showMessageDialog(this, "Usuario logueado con exito");

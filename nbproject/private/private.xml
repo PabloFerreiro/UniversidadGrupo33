@@ -3,10 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Pablo/Documents/NetBeansProjects/NetBeans8/UniversidadGrupo33/src/universidadgrupo33/vistas/JIFMateria.java</file>
-            <file>file:/C:/Users/Pablo/Documents/NetBeansProjects/NetBeans8/UniversidadGrupo33/src/universidadgrupo33/vistas/MenuPrincipal.java</file>
-            <file>file:/C:/Users/Pablo/Documents/NetBeansProjects/NetBeans8/UniversidadGrupo33/src/universidadgrupo33/vistas/JIFLogin.java</file>
-            <file>file:/C:/Users/Pablo/Documents/NetBeansProjects/NetBeans8/UniversidadGrupo33/src/universidadgrupo33/vistas/JIFAlumno.java</file>
+            <file>file:/C:/Users/Multi/Documents/NetBeansProjects/curso3/UniversidadGrupo33/src/universidadgrupo33/accesoADatos/MateriaData.java</file>
+            <file>file:/C:/Users/Multi/Documents/NetBeansProjects/curso3/UniversidadGrupo33/src/universidadgrupo33/vistas/JIFConsultaAlumnoXMateria.java</file>
         </group>
     </open-files>
 </project-private>
