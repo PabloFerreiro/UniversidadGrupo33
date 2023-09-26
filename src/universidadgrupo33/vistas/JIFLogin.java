@@ -29,14 +29,22 @@ public class JIFLogin extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jbIngresar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jtfUsuarioLogin = new javax.swing.JTextField();
         jpfPassLogin = new javax.swing.JPasswordField();
-        jbIngresar = new javax.swing.JButton();
 
         setName("jiflogueo"); // NOI18N
+
+        jbIngresar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jbIngresar.setText("Ingresar");
+        jbIngresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbIngresarActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/universidadgrupo33/vistas/images/Logo.png"))); // NOI18N
@@ -48,21 +56,8 @@ public class JIFLogin extends javax.swing.JInternalFrame {
         jLabel3.setText("CONTRASEÑA");
 
         jtfUsuarioLogin.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jtfUsuarioLogin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtfUsuarioLoginActionPerformed(evt);
-            }
-        });
 
         jpfPassLogin.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-
-        jbIngresar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jbIngresar.setText("Ingresar");
-        jbIngresar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbIngresarActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -97,12 +92,10 @@ public class JIFLogin extends javax.swing.JInternalFrame {
                 .addContainerGap(62, Short.MAX_VALUE))
         );
 
+        jbIngresar.getAccessibleContext().setAccessibleDescription("");
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jtfUsuarioLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfUsuarioLoginActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtfUsuarioLoginActionPerformed
 
     private void jbIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbIngresarActionPerformed
 
