@@ -19,10 +19,7 @@ public class JIFLogin extends javax.swing.JInternalFrame {
     public JIFLogin() {
         initComponents();
         this.setTitle("UNIVERSIDAD ULP - Ingresar");
-        //this.requestFocusInWindow();
-       
 
-        
     }
 
     /**
@@ -112,8 +109,8 @@ public class JIFLogin extends javax.swing.JInternalFrame {
         String password = new String(jpfPassLogin.getPassword());
         MenuPrincipal menuPrincipal = (MenuPrincipal) getTopLevelAncestor();
 
-        //if (jtfUsuarioLogin.getText().equals("pepe") && password.equals("1234")) {
-        if (jtfUsuarioLogin.getText().equals("") && password.equals("")) {
+        if (jtfUsuarioLogin.getText().equals("pepe") && password.equals("1234")) {
+        //if (jtfUsuarioLogin.getText().equals("") && password.equals("")) {
             //MenuPrincipal menuPrincipal = (MenuPrincipal) getTopLevelAncestor();
             menuPrincipal.editarObloquearMenues(true, true, true, true, true, false, false);
             JOptionPane.showMessageDialog(this, "Usuario logueado con éxito");

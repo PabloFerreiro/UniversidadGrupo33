@@ -115,11 +115,6 @@ public class JIFConsultaAlumnoXMateria extends javax.swing.JInternalFrame {
         });
 
         jTFMateriaAbuscar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jTFMateriaAbuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTFMateriaAbuscarActionPerformed(evt);
-            }
-        });
         jTFMateriaAbuscar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jTFMateriaAbuscarKeyReleased(evt);
@@ -234,10 +229,6 @@ public class JIFConsultaAlumnoXMateria extends javax.swing.JInternalFrame {
        
                
     }//GEN-LAST:event_jTConsultaMateriasMouseReleased
-
-    private void jTFMateriaAbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFMateriaAbuscarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTFMateriaAbuscarActionPerformed
     
     // VERSION NUEVA BUSCANDO SEGUN LO QUE SE VAYA QUERIENDO BUSCAR EN UNA JTABLE
     /*    

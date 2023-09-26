@@ -284,7 +284,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jdpEscritorio.repaint();
         JIFLogin jiflogin = new JIFLogin();
         jdpEscritorio.add(jiflogin);
-        jiflogin.setVisible(true); 
+        jiflogin.setVisible(true);
         //jdpEscritorio.moveToFront(jiflogin);
         
 
